@@ -4,10 +4,14 @@
     <meta charset="UTF-8" />
     <title>Thanh toán</title>
     <link rel="stylesheet" th:href="@{/CSS/style.css}" />
+    <link rel="stylesheet" th:href="@{/CSS/header.css}" />
+    <link rel="stylesheet" th:href="@{/CSS/footer.css}" />
     <link rel="stylesheet" th:href="@{/CSS/cart.css}" />
-    <th:block th:replace="/templates/header :: header"></th:block>
 </head>
 <body>
+<!-- Include header fragment -->
+<div th:replace="header :: header"></div>
+
 <div class="container checkout-page">
     <h1>Thanh toán</h1>
 
@@ -53,6 +57,10 @@
     </div>
 
 </div>
-<th:block th:replace="/templates/footer :: footer"></th:block>
+
+<!-- Include footer fragment -->
+<div th:replace="footer :: footer"></div>
+
+<script th:src="@{/JavaScript/header.js}"></script>
 </body>
 </html>

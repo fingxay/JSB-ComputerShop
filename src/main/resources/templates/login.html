@@ -6,21 +6,13 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>Đăng nhập - JSB ComputerShop</title>
 	<link rel="stylesheet" th:href="@{/CSS/style.css}" />
+	<link rel="stylesheet" th:href="@{/CSS/header.css}" />
+	<link rel="stylesheet" th:href="@{/CSS/footer.css}" />
 	<link rel="stylesheet" th:href="@{/CSS/login.css}" />
 </head>
 <body>
-	<header class="header">
-		<div class="container top">
-			<div class="brand">
-				<img src="/Images/logo.png" alt="logo" onerror="this.style.display='none'" />
-				JSB ComputerShop
-			</div>
-			<nav class="nav">
-				<a href="/">Home</a>
-				<a href="/products">Products</a>
-			</nav>
-		</div>
-	</header>
+	<!-- Include header fragment -->
+	<div th:replace="header :: header"></div>
 
 	<main class="container">
 		<div class="auth-wrapper">
@@ -61,6 +53,10 @@
 		</div>
 	</main>
 
+	<!-- Include footer fragment -->
+	<div th:replace="footer :: footer"></div>
+
+	<script th:src="@{/JavaScript/header.js}"></script>
 	<script th:src="@{/JavaScript/main.js}"></script>
 	<script>
 		// small enhancement: toggle password visibility on double-click
