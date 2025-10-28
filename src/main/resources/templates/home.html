@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Computer Components Shop - Home</title>
+	<link rel="stylesheet" th:href="@{/CSS/style.css}" />
+</head>
+<body>
+	<header class="header">
+		<div class="container top">
+			<div class="brand">
+				<img src="/Images/logo.png" alt="logo" onerror="this.style.display='none'" />
+				JSB ComputerShop
+			</div>
+			<nav class="nav">
+				<a href="/">Home</a>
+				<a href="/products">Products</a>
+				<a href="/contact">Contact</a>
+				<a href="/login">Login</a>
+			</nav>
+			<form id="search-form" class="search" th:action="@{/search}" method="get">
+				<input id="q" type="search" name="q" placeholder="Search components, brands..." />
+				<button class="btn" type="submit">Search</button>
+			</form>
+		</div>
+	</header>
+
+	<main class="container">
+		<section class="hero">
+			<div class="hero-left">
+				<h1 class="title">Phụ kiện máy tính - Tìm mọi thứ bạn cần</h1>
+				<p class="subtitle">Từ bàn phím, chuột, tai nghe đến linh kiện hiệu năng cao — giá tốt, giao nhanh.</p>
+				<a href="/products" class="btn">Mua ngay</a>
+			</div>
+			<div class="hero-right">
+				<img src="/Images/hero.png" alt="hero" style="max-width:320px;object-fit:contain" onerror="this.style.display='none'" />
+			</div>
+		</section>
+
+		<section>
+			<div class="section-title">
+				<h2>Danh mục nổi bật</h2>
+				<a href="/categories" class="muted">Xem tất cả</a>
+			</div>
+			<div class="categories">
+				<div class="category">Bàn phím</div>
+				<div class="category">Chuột</div>
+				<div class="category">Tai nghe</div>
+				<div class="category">Ghế</div>
+				<div class="category">Linh kiện</div>
+			</div>
+		</section>
+
+		<section>
+			<div class="section-title">
+				<h2>Sản phẩm nổi bật</h2>
+				<a href="/products?sort=popular" class="muted">Xem thêm</a>
+			</div>
+
+			<div class="products-grid">
+				<!-- Thymeleaf: iterate over products provided by controller -->
+				<div class="card" th:each="product : ${products}">
+					<img th:src="${product.imageUrl}" th:alt="${product.name}" src="/Images/placeholder.svg" />
+					<h3 th:text="${product.name}">Sample product</h3>
+					<div class="muted" th:text="${product.brand}">Brand</div>
+					<div class="price" th:text="${#numbers.formatDecimal(product.price,1,'COMMA',2,'POINT')}">0.00</div>
+					<button type="button" class="btn add-to-cart-btn" th:attr="data-id=${product.id}">Add to cart</button>
+				</div>
+
+				<!-- Fallback cards when no server data provided (useful for static preview) -->
+				<div class="card" th:if="${products == null}">
+					<img src="/Images/keyboard.svg" alt="Keyboard" />
+					<h3>Mechanical Keyboard</h3>
+					<div class="muted">Brand X</div>
+					<div class="price">1,200,000 ₫</div>
+					<button type="button" class="btn add-to-cart-btn" data-id="demo-1">Add to cart</button>
+				</div>
+
+				<div class="card" th:if="${products == null}">
+					<img src="/Images/mouse.svg" alt="Mouse" />
+					<h3>Gaming Mouse</h3>
+					<div class="muted">Brand Y</div>
+					<div class="price">450,000 ₫</div>
+					<button type="button" class="btn add-to-cart-btn" data-id="demo-2">Add to cart</button>
+				</div>
+
+			</div>
+		</section>
+
+		<footer class="footer">
+			<div class="container center">
+				<div>© <span th:text="${T(java.time.Year).now().value}">2025</span> JSB ComputerShop — Phụ kiện máy tính</div>
+				<div class="muted">Địa chỉ giả định · Hotline: 0123-456-789</div>
+			</div>
+		</footer>
+	</main>
+
+	<script th:src="@{/JavaScript/main.js}"></script>
+</body>
+</html>

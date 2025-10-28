@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Đăng nhập - JSB ComputerShop</title>
+	<link rel="stylesheet" th:href="@{/CSS/style.css}" />
+	<style>
+		/* small page-specific tweaks */
+		.auth-wrapper{max-width:420px;margin:48px auto;padding:28px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(16,24,40,0.06)}
+		.auth-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+		.auth-header h2{margin:0}
+		.form-row{margin-bottom:12px}
+		.form-row input{width:100%;padding:10px;border:1px solid #e6e9ee;border-radius:8px}
+		.helper{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+		.error{color:#c92a2a;background:#fff5f5;padding:8px;border-radius:6px;border:1px solid #f5c2c2}
+	</style>
+</head>
+<body>
+	<header class="header">
+		<div class="container top">
+			<div class="brand">
+				<img src="/Images/logo.png" alt="logo" onerror="this.style.display='none'" />
+				JSB ComputerShop
+			</div>
+			<nav class="nav">
+				<a href="/">Home</a>
+				<a href="/products">Products</a>
+			</nav>
+		</div>
+	</header>
+
+	<main class="container">
+		<div class="auth-wrapper">
+			<div class="auth-header">
+				<img src="/Images/placeholder.svg" alt="logo" style="width:48px;height:48px;border-radius:8px" />
+				<div>
+					<h2>Đăng nhập vào tài khoản</h2>
+					<div class="muted">Đăng nhập để tiếp tục mua sắm và quản lý đơn hàng</div>
+				</div>
+			</div>
+
+			<div th:if="${param.error}" class="error">Tên đăng nhập hoặc mật khẩu không đúng.</div>
+			<div th:if="${param.logout}" class="muted">Bạn đã đăng xuất thành công.</div>
+
+			<form th:action="@{/login}" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+				<div class="form-row">
+					<label for="username" class="muted">Email hoặc tên đăng nhập</label>
+					<input id="username" name="username" type="text" placeholder="you@example.com" required />
+				</div>
+
+				<div class="form-row">
+					<label for="password" class="muted">Mật khẩu</label>
+					<input id="password" name="password" type="password" placeholder="••••••••" required />
+				</div>
+
+				<div class="helper">
+					<label><input type="checkbox" name="remember-me" /> Ghi nhớ tôi</label>
+					<a href="/forgot-password" class="muted">Quên mật khẩu?</a>
+				</div>
+
+				<div style="display:flex;gap:10px;align-items:center">
+					<button class="btn" type="submit">Đăng nhập</button>
+					<a class="muted" href="/register">Tạo tài khoản mới</a>
+				</div>
+			</form>
+		</div>
+	</main>
+
+	<script th:src="@{/JavaScript/main.js}"></script>
+	<script>
+		// small enhancement: toggle password visibility on double-click
+		document.addEventListener('DOMContentLoaded', ()=>{
+			const pwd = document.getElementById('password');
+			if(pwd){
+				pwd.addEventListener('dblclick', ()=>{
+					pwd.type = pwd.type === 'password' ? 'text' : 'password';
+				});
+			}
+		});
+	</script>
+</body>
+</html>
