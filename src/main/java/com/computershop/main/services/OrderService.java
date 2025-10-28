@@ -205,4 +205,18 @@ public class OrderService {
         public double getTotalSpent() { return totalSpent; }
         public int getRecentOrdersCount() { return recentOrdersCount; }
     }
+    
+    /**
+     * Get recent orders by user ID
+     */
+    public List<Order> getRecentOrdersByUserId(Integer userId, int limit) {
+        return orderRepository.findRecentOrdersByUserId(userId, limit);
+    }
+    
+    /**
+     * Get total spent by user ID
+     */
+    public double getTotalSpentByUserId(Integer userId) {
+        return orderRepository.getTotalSpentByUserId(userId);
+    }
 }

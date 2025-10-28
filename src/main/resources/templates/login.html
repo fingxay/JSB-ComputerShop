@@ -6,16 +6,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<title>Đăng nhập - JSB ComputerShop</title>
 	<link rel="stylesheet" th:href="@{/CSS/style.css}" />
-	<style>
-		/* small page-specific tweaks */
-		.auth-wrapper{max-width:420px;margin:48px auto;padding:28px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(16,24,40,0.06)}
-		.auth-header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-		.auth-header h2{margin:0}
-		.form-row{margin-bottom:12px}
-		.form-row input{width:100%;padding:10px;border:1px solid #e6e9ee;border-radius:8px}
-		.helper{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-		.error{color:#c92a2a;background:#fff5f5;padding:8px;border-radius:6px;border:1px solid #f5c2c2}
-	</style>
+	<link rel="stylesheet" th:href="@{/CSS/login.css}" />
 </head>
 <body>
 	<header class="header">
@@ -34,7 +25,7 @@
 	<main class="container">
 		<div class="auth-wrapper">
 			<div class="auth-header">
-				<img src="/Images/placeholder.svg" alt="logo" style="width:48px;height:48px;border-radius:8px" />
+				<img src="/Images/placeholder.svg" alt="logo" />
 				<div>
 					<h2>Đăng nhập vào tài khoản</h2>
 					<div class="muted">Đăng nhập để tiếp tục mua sắm và quản lý đơn hàng</div>
@@ -62,7 +53,7 @@
 					<a href="/forgot-password" class="muted">Quên mật khẩu?</a>
 				</div>
 
-				<div style="display:flex;gap:10px;align-items:center">
+				<div class="login-actions">
 					<button class="btn" type="submit">Đăng nhập</button>
 					<a class="muted" href="/register">Tạo tài khoản mới</a>
 				</div>

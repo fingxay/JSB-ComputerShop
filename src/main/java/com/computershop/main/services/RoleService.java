@@ -101,4 +101,11 @@ public class RoleService {
         return roleRepository.findByRoleName("admin")
                 .orElseThrow(() -> new RuntimeException("Admin role not found"));
     }
+    
+    /**
+     * Find role by name (alias for getRoleByName for consistency)
+     */
+    public Optional<Role> findByRoleName(String roleName) {
+        return roleRepository.findByRoleName(roleName);
+    }
 }

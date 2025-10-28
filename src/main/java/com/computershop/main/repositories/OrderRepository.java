@@ -72,4 +72,17 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
      */
     @Query("SELECT o FROM Order o WHERE o.orderDate >= :thirtyDaysAgo ORDER BY o.orderDate DESC")
     List<Order> findRecentOrders(@Param("thirtyDaysAgo") LocalDateTime thirtyDaysAgo);
+    
+    /**
+     * Find recent orders by user ID with limit
+     */
+    @Query(value = "SELECT TOP :limit * FROM orders WHERE user_id = :userId ORDER BY order_date DESC", nativeQuery = true)
+    List<Order> findRecentOrdersByUserId(@Param("userId") Integer userId, @Param("limit") int limit);
+    
+    /**
+     * Get total spent by user ID
+     */
+    @Query("SELECT COALESCE(SUM(od.price * od.quantity), 0) FROM Order o " +
+           "JOIN o.orderDetails od WHERE o.user.userId = :userId")
+    double getTotalSpentByUserId(@Param("userId") Integer userId);
 }

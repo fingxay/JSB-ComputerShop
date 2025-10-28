@@ -1,0 +1,83 @@
+<!-- Header fragment with role-based navigation -->
+<header class="header" th:fragment="header">
+    <div class="container">
+        <div class="header-top">
+            <div class="brand">
+                <img src="/Images/logo.png" alt="logo" onerror="this.style.display='none'" />
+                <a href="/" class="brand-name">JSB ComputerShop</a>
+            </div>
+            
+            <!-- Search bar -->
+            <form id="search-form" class="search" th:action="@{/search}" method="get">
+                <input id="q" type="search" name="q" placeholder="Tìm kiếm sản phẩm..." />
+                <button class="btn btn-search" type="submit">
+                    <span>Tìm kiếm</span>
+                </button>
+            </form>
+            
+            <!-- Navigation based on user role -->
+            <nav class="nav">
+                <!-- Guest navigation -->
+                <div th:if="${session.user == null}" class="nav-guest">
+                    <a href="/" class="nav-link">Trang chủ</a>
+                    <a href="/products" class="nav-link">Sản phẩm</a>
+                    <a href="/about" class="nav-link">Giới thiệu</a>
+                    <a href="/cart" class="nav-link cart-link">
+                        <span>Giỏ hàng</span>
+                        <span class="cart-count" th:if="${session.cartCount != null}" th:text="${session.cartCount}">0</span>
+                    </a>
+                    <a href="/login" class="nav-link btn btn-primary">Đăng nhập</a>
+                    <a href="/register" class="nav-link">Đăng ký</a>
+                </div>
+                
+                <!-- User navigation -->
+                <div th:if="${session.user != null && session.user.role.roleName == 'customer'}" class="nav-user">
+                    <a href="/" class="nav-link">Trang chủ</a>
+                    <a href="/products" class="nav-link">Sản phẩm</a>
+                    <a href="/about" class="nav-link">Giới thiệu</a>
+                    <a href="/cart" class="nav-link cart-link">
+                        <span>Giỏ hàng</span>
+                        <span class="cart-count" th:if="${session.cartCount != null}" th:text="${session.cartCount}">0</span>
+                    </a>
+                    <a href="/orders" class="nav-link">Lịch sử mua</a>
+                    
+                    <div class="user-menu">
+                        <button class="user-menu-btn" onclick="toggleUserMenu()">
+                            <span th:text="${session.user.username}">User</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="user-menu-dropdown" id="userMenuDropdown">
+                            <a href="/profile" class="dropdown-item">Thông tin tài khoản</a>
+                            <a href="/orders" class="dropdown-item">Đơn hàng của tôi</a>
+                            <hr class="dropdown-divider">
+                            <a href="/logout" class="dropdown-item">Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Admin navigation -->
+                <div th:if="${session.user != null && session.user.role.roleName == 'admin'}" class="nav-admin">
+                    <a href="/admin/products" class="nav-link">Danh sách sản phẩm</a>
+                    <a href="/admin/users" class="nav-link">Danh sách tài khoản</a>
+                    <a href="/admin/orders" class="nav-link">Danh sách đơn hàng</a>
+                    
+                    <div class="user-menu">
+                        <button class="user-menu-btn" onclick="toggleUserMenu()">
+                            <span th:text="${session.user.username}">Admin</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="user-menu-dropdown" id="userMenuDropdown">
+                            <a href="/admin/dashboard" class="dropdown-item">Dashboard</a>
+                            <a href="/profile" class="dropdown-item">Thông tin tài khoản</a>
+                            <hr class="dropdown-divider">
+                            <a href="/logout" class="dropdown-item">Đăng xuất</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<link rel="stylesheet" th:href="@{/CSS/header.css}" />
+<script th:src="@{/JavaScript/header.js}"></script>

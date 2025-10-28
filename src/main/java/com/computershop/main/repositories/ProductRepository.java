@@ -1,6 +1,8 @@
 package com.computershop.main.repositories;
 
 import com.computershop.main.entities.Product;
+// import com.computershop.main.entities.Product;
+import com.computershop.main.entities.Category;
 import com.computershop.main.entities.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -79,4 +81,26 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      */
     @Query("SELECT COUNT(p) FROM Product p WHERE p.stockQuantity > 0")
     long countInStockProducts();
+    
+    /**
+     * Find featured products for homepage (newest products with good stock)
+     */
+    @Query(value = "SELECT TOP :limit * FROM products WHERE stock_quantity > 0 ORDER BY created_at DESC", nativeQuery = true)
+    List<Product> findFeaturedProducts(@Param("limit") int limit);
+    
+    /**
+     * Find all distinct categories
+     */
+    @Query("SELECT DISTINCT c FROM Category c JOIN c.products p")
+    List<Category> findDistinctCategories();
+    
+    /**
+     * Find products by category
+     */
+    List<Product> findByCategory(Category category);
+    
+    /**
+     * Find products by category ID
+     */
+    List<Product> findByCategoryCategoryId(Integer categoryId);
 }

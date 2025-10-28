@@ -193,4 +193,72 @@ public class UserService {
         }
         return Optional.empty();
     }
+    
+    /**
+     * Find user by username
+     */
+    public Optional<User> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+    
+    /**
+     * Find user by email
+     */
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    
+    /**
+     * Register a new user
+     */
+    public User registerUser(User user) {
+        // Hash password (simplified - in production use BCryptPasswordEncoder)
+        user.setPasswordHash(hashPassword(user.getPassword()));
+        user.setPassword(null); // Clear plain text password
+        return userRepository.save(user);
+    }
+    
+    /**
+     * Validate user login
+     */
+    public Optional<User> validateLogin(String username, String password) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            // Try by email
+            userOpt = userRepository.findByEmail(username);
+        }
+        
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            if (verifyPassword(password, user.getPasswordHash())) {
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Hash password (simplified implementation)
+     * In production, use BCryptPasswordEncoder
+     */
+    private String hashPassword(String password) {
+        // Simple hash for demo - use BCrypt in production
+        return password + "_hashed";
+    }
+    
+    /**
+     * Verify password (public method for controller use)
+     */
+    public boolean verifyPassword(String plainPassword, String hashedPassword) {
+        // Simple verification for demo - use BCrypt in production
+        return (plainPassword + "_hashed").equals(hashedPassword);
+    }
+    
+    /**
+     * Update user (overloaded method)
+     */
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
+    
 }

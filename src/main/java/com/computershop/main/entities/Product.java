@@ -2,6 +2,7 @@ package com.computershop.main.entities;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "products")
@@ -25,19 +26,28 @@ public class Product {
     private Integer stockQuantity;
     
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id")
     private Image image;
+    
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
     
     // Default constructor
     public Product() {}
     
     // Constructor with parameters
-    public Product(String productName, String description, BigDecimal price, Integer stockQuantity, Image image) {
+    public Product(String productName, String description, BigDecimal price, Integer stockQuantity, Category category, Image image) {
         this.productName = productName;
         this.description = description;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.category = category;
         this.image = image;
+        this.createdAt = LocalDateTime.now();
     }
     
     // Getters and Setters
@@ -79,6 +89,22 @@ public class Product {
     
     public void setStockQuantity(Integer stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+    
+    public Category getCategory() {
+        return category;
+    }
+    
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+    
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
     
     public Image getImage() {

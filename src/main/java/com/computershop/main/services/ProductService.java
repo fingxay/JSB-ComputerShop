@@ -2,7 +2,9 @@ package com.computershop.main.services;
 
 import com.computershop.main.entities.Product;
 import com.computershop.main.entities.Image;
+import com.computershop.main.entities.Category;
 import com.computershop.main.repositories.ProductRepository;
+// import com.computershop.main.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -227,4 +229,81 @@ public class ProductService {
     public long countInStockProducts() {
         return productRepository.countInStockProducts();
     }
+    
+    /**
+     * Get featured products for homepage
+     */
+    public List<Product> getFeaturedProducts(int limit) {
+        return productRepository.findFeaturedProducts(limit);
+    }
+    
+    /**
+     * Get total number of products
+     */
+    public long getTotalProducts() {
+        return productRepository.count();
+    }
+    
+    /**
+     * Get all unique categories
+     */
+    public List<Category> getAllCategories() {
+        return productRepository.findDistinctCategories();
+    }
+    
+    /**
+     * Get all category names
+     */
+    public List<String> getAllCategoryNames() {
+        return getAllCategories().stream()
+                .map(Category::getCategoryName)
+                .toList();
+    }
+    
+    /**
+     * Get products by category
+     */
+    public List<Product> getProductsByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    }
+    
+    /**
+     * Get products by category name
+     */
+    public List<Product> getProductsByCategoryName(String categoryName) {
+        return productRepository.findDistinctCategories().stream()
+                .filter(cat -> cat.getCategoryName().equals(categoryName))
+                .findFirst()
+                .map(this::getProductsByCategory)
+                .orElse(List.of());
+    }
+    
+    /**
+     * Get products by category ID
+     */
+    public List<Product> getProductsByCategoryId(Integer categoryId) {
+        return productRepository.findByCategoryCategoryId(categoryId);
+    }
+    
+    /**
+     * Filter products by price range
+     */
+    public List<Product> filterProductsByPriceRange(BigDecimal minPrice, BigDecimal maxPrice) {
+        return productRepository.findByPriceBetween(minPrice, maxPrice);
+    }
+    
+    /**
+     * Get products sorted by price ascending
+     */
+    public List<Product> getProductsSortedByPriceAsc() {
+        return productRepository.findAllByOrderByPriceAsc();
+    }
+    
+    /**
+     * Get products sorted by price descending
+     */
+    public List<Product> getProductsSortedByPriceDesc() {
+        return productRepository.findAllByOrderByPriceDesc();
+    }
+    
 }

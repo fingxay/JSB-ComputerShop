@@ -24,6 +24,10 @@ public class User {
     @JoinColumn(name = "roleid")
     private Role role;
     
+    // Transient field for password (not persisted)
+    @Transient
+    private String password;
+    
     // Default constructor
     public User() {}
     
@@ -74,6 +78,14 @@ public class User {
     
     public void setRole(Role role) {
         this.role = role;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     @Override
