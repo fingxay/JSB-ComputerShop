@@ -1,4 +1,129 @@
-# Computer Components Shop
+# Computer Shop - Spring Boot E-commerce Application
+
+## 🛠️ Prerequisites
+
+### 1. Software Requirements
+- **Java 17** or higher
+- **Maven 3.8+**
+- **SQL Server** (LocalDB, Express, or Full)
+
+### 2. Database Setup
+1. Start SQL Server service
+2. Create database using the provided script:
+   ```sql
+   sqlcmd -S localhost -U sa -P 123456 -i database.sql
+   ```
+   Or run `database.sql` in SQL Server Management Studio
+
+### 3. Application Configuration
+Database connection is configured in `src/main/resources/application.properties`:
+```properties
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=ComputerShop
+spring.datasource.username=sa
+spring.datasource.password=123456
+```
+
+## 🚀 Running the Application
+
+### Option 1: Using the provided script
+```cmd
+start-app.bat
+```
+
+### Option 2: Manual Maven commands
+```cmd
+# Compile
+mvn clean compile
+
+# Run application
+mvn spring-boot:run
+```
+
+### Option 3: Using IDE
+1. Open project in IntelliJ IDEA / Eclipse
+2. Run `MainApplication.java`
+
+## 🌐 Application URLs
+
+- **Homepage**: http://localhost:8080
+- **Login**: http://localhost:8080/login
+- **Products**: http://localhost:8080/products
+- **Cart**: http://localhost:8080/cart
+- **Admin Panel**: http://localhost:8080/admin (requires admin role)
+
+## 👤 Default Users
+
+After running `database.sql`, you'll have:
+- **Admin**: username=`admin`, password=`admin123`
+- **User**: username=`user`, password=`user123`
+
+## 🛒 Features
+
+### Customer Features
+- Browse products by category
+- Search products
+- Add to cart (session-based)
+- User registration/login
+- Order checkout
+- View order history
+
+### Admin Features  
+- Dashboard with statistics
+- User management
+- Product CRUD operations
+- Category management
+- Order oversight
+
+## 🏗️ Architecture
+
+- **Backend**: Spring Boot 3.5.6
+- **Frontend**: Thymeleaf + CSS/JavaScript
+- **Database**: SQL Server with JPA/Hibernate
+- **Session**: HTTP sessions for cart & auth
+
+## 📁 Project Structure
+
+```
+src/main/java/com/computershop/main/
+├── controllers/     # MVC Controllers
+├── entities/        # JPA Entities
+├── repositories/    # Data Access Layer
+├── services/        # Business Logic
+└── MainApplication.java
+
+src/main/resources/
+├── templates/       # Thymeleaf HTML templates
+├── static/CSS/      # Stylesheets
+├── static/JavaScript/ # Client-side scripts
+└── application.properties
+```
+
+## 🔧 Troubleshooting
+
+### Database Connection Issues
+1. Verify SQL Server is running: `services.msc` → SQL Server service
+2. Test connection: `sqlcmd -S localhost -U sa -P 123456`
+3. Check firewall settings for port 1433
+
+### Port Already in Use
+Change port in `application.properties`:
+```properties
+server.port=8081
+```
+
+### Build Issues
+Clean and rebuild:
+```cmd
+mvn clean install
+```
+
+## 📝 Development Notes
+
+- Controllers handle HTTP requests and return Thymeleaf views
+- Services contain business logic and transaction management  
+- Repositories use Spring Data JPA for database operations
+- Entities are mapped to SQL Server tables with proper relationships
+- CSS is separated from HTML templates for maintainability
 This project builds a full-featured e-commerce platform using Spring Boot (REST API) and React/Vue. It supports User flows (browse, cart, secure checkout, order tracking) and an Admin module for comprehensive management (products, inventory, orders, users, reporting). Architecture includes MySQL payment integration (VNPay/Momo).
 
 FINAL PROJECT REQUIREMENTS

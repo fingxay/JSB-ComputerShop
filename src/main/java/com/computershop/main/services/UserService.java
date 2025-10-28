@@ -261,4 +261,33 @@ public class UserService {
         return userRepository.save(user);
     }
     
+    /**
+     * Get total number of users
+     */
+    public long getTotalUsers() {
+        return userRepository.count();
+    }
+    
+    /**
+     * Get recent users
+     */
+    public List<User> getRecentUsers(int limit) {
+        return userRepository.findRecentUsers(limit);
+    }
+    
+    /**
+     * Toggle user status (enable/disable)
+     * Note: This is a simple implementation - you might want to add a status field to User entity
+     */
+    public void toggleUserStatus(Integer userId) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            // For now, just update the user (could add active/inactive status field)
+            User user = userOpt.get();
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found with id: " + userId);
+        }
+    }
+    
 }

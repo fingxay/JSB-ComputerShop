@@ -69,7 +69,9 @@ public class OrderService {
      * Get today's orders
      */
     public List<Order> getTodayOrders() {
-        return orderRepository.findTodayOrders();
+        LocalDateTime startOfDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime endOfDay = startOfDay.plusDays(1);
+        return orderRepository.findTodayOrders(startOfDay, endOfDay);
     }
     
     /**
@@ -218,5 +220,19 @@ public class OrderService {
      */
     public double getTotalSpentByUserId(Integer userId) {
         return orderRepository.getTotalSpentByUserId(userId);
+    }
+    
+    /**
+     * Get total number of orders
+     */
+    public long getTotalOrders() {
+        return orderRepository.count();
+    }
+    
+    /**
+     * Get recent orders for admin dashboard
+     */
+    public List<Order> getRecentOrders(int limit) {
+        return orderRepository.findRecentOrdersForAdmin(limit);
     }
 }

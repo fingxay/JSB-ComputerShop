@@ -103,4 +103,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
      * Find products by category ID
      */
     List<Product> findByCategoryCategoryId(Integer categoryId);
+    
+    /**
+     * Find low stock products
+     */
+    @Query(value = "SELECT TOP :limit * FROM products WHERE stock_quantity < 20 ORDER BY stock_quantity ASC", nativeQuery = true)
+    List<Product> findLowStockProducts(@Param("limit") int limit);
 }

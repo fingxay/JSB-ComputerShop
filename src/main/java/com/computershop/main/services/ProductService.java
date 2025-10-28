@@ -306,4 +306,23 @@ public class ProductService {
         return productRepository.findAllByOrderByPriceDesc();
     }
     
+    /**
+     * Get low stock products
+     */
+    public List<Product> getLowStockProducts(int limit) {
+        return productRepository.findLowStockProducts(limit);
+    }
+    
+    /**
+     * Update product stock quantity
+     */
+    public void updateStock(Integer productId, int newStock) {
+        Optional<Product> productOpt = productRepository.findById(productId);
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            product.setStockQuantity(newStock);
+            productRepository.save(product);
+        }
+    }
+    
 }

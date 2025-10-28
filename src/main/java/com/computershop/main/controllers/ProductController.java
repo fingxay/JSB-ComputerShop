@@ -1,13 +1,13 @@
 package com.computershop.main.controllers;
 
 import com.computershop.main.entities.Product;
-import com.computershop.main.entities.Category;
+// import com.computershop.main.entities.Category;
 import com.computershop.main.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+// import org.springframework.data.domain.Page;
+// import org.springframework.data.domain.PageRequest;
+// import org.springframework.data.domain.Pageable;
+// import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

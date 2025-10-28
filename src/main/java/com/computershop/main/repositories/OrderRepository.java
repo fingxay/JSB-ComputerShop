@@ -41,8 +41,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     /**
      * Find orders from today
      */
-    @Query("SELECT o FROM Order o WHERE DATE(o.orderDate) = CURRENT_DATE")
-    List<Order> findTodayOrders();
+    @Query("SELECT o FROM Order o WHERE o.orderDate >= :startOfDay AND o.orderDate < :endOfDay")
+    List<Order> findTodayOrders(@Param("startOfDay") LocalDateTime startOfDay, @Param("endOfDay") LocalDateTime endOfDay);
     
     /**
      * Find orders from last N days
@@ -85,4 +85,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query("SELECT COALESCE(SUM(od.price * od.quantity), 0) FROM Order o " +
            "JOIN o.orderDetails od WHERE o.user.userId = :userId")
     double getTotalSpentByUserId(@Param("userId") Integer userId);
+    
+    /**
+     * Find recent orders for admin dashboard
+     */
+    @Query(value = "SELECT TOP :limit * FROM orders ORDER BY order_date DESC", nativeQuery = true)
+    List<Order> findRecentOrdersForAdmin(@Param("limit") int limit);
 }
