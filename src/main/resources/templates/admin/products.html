@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm - Computer Shop Admin</title>
+    <link rel="stylesheet" th:href="@{/CSS/admin.css}">
+    <link rel="stylesheet" th:href="@{/CSS/admin-product.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <nav class="admin-sidebar">
+            <div class="admin-logo">
+                <h2><i class="fas fa-laptop"></i> Admin Panel</h2>
+            </div>
+            <ul class="admin-nav">
+                <li><a th:href="@{/admin/dashboard}"><i class="fas fa-chart-bar"></i> Dashboard</a></li>
+                <li><a th:href="@{/admin/users}"><i class="fas fa-users"></i> Người Dùng</a></li>
+                <li><a th:href="@{/admin/products}" class="active"><i class="fas fa-box"></i> Sản Phẩm</a></li>
+                <li><a th:href="@{/admin/categories}"><i class="fas fa-tags"></i> Danh Mục</a></li>
+                <li><a th:href="@{/admin/orders}"><i class="fas fa-shopping-cart"></i> Đơn Hàng</a></li>
+                <li><a th:href="@{/}"><i class="fas fa-home"></i> Trang Chủ</a></li>
+                <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Đăng Xuất</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1><i class="fas fa-box"></i> Quản Lý Sản Phẩm</h1>
+                <p>Quản lý thông tin sản phẩm và kho hàng</p>
+            </div>
+
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="admin-alert admin-alert-success">
+                <i class="fas fa-check-circle"></i>
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="admin-alert admin-alert-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <span th:text="${error}"></span>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="admin-quick-actions">
+                <a th:href="@{/admin/products/add}" class="admin-btn admin-btn-primary admin-btn-large">
+                    <i class="fas fa-plus-circle"></i> Thêm Sản Phẩm Mới
+                </a>
+                <button type="button" class="admin-btn admin-btn-info admin-btn-large" onclick="refreshProducts()">
+                    <i class="fas fa-sync-alt"></i> Làm Mới Danh Sách
+                </button>
+            </div>
+
+            <!-- Products Table -->
+            <div class="admin-table-container">
+                <div class="admin-table-header">
+                    <h2><i class="fas fa-list"></i> Danh Sách Sản Phẩm</h2>
+                    <div class="admin-table-actions">
+                        <span class="admin-summary-count">
+                            <i class="fas fa-box"></i>
+                            Tổng: <strong th:text="${#lists.size(products)}">0</strong> sản phẩm
+                        </span>
+                    </div>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-hashtag"></i> ID</th>
+                            <th><i class="fas fa-box"></i> Tên Sản Phẩm</th>
+                            <th><i class="fas fa-tag"></i> Danh Mục</th>
+                            <th><i class="fas fa-dollar-sign"></i> Giá</th>
+                            <th><i class="fas fa-warehouse"></i> Số Lượng</th>
+                            <th><i class="fas fa-info-circle"></i> Trạng Thái</th>
+                            <th><i class="fas fa-cogs"></i> Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${products}">
+                            <td>
+                                <span class="product-id-badge" th:text="${product.productId}"></span>
+                            </td>
+                            <td>
+                                <div class="product-info-with-avatar">
+                                    <div class="product-avatar" 
+                                         style="background: linear-gradient(135deg, #3b82f6, #06b6d4); 
+                                                display: flex; align-items: center; justify-content: center; 
+                                                color: white; font-weight: bold; font-size: 1.2rem;">
+                                        🖥️
+                                    </div>
+                                    <div class="product-details">
+                                        <div class="product-info">
+                                            <strong th:text="${product.productName}"></strong>
+                                            <small th:if="${product.description}" 
+                                                   class="text-muted" 
+                                                   th:text="${#strings.abbreviate(product.description, 50)}"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="admin-badge admin-badge-secondary" 
+                                      th:text="${product.category?.categoryName ?: 'N/A'}"></span>
+                            </td>
+                            <td>
+                                <strong th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"></strong>
+                            </td>
+                            <td>
+                                <span th:classappend="${product.stockQuantity <= 5} ? 'text-danger' : (${product.stockQuantity <= 20} ? 'text-warning' : 'text-success')"
+                                      th:text="${product.stockQuantity}"></span>
+                            </td>
+                            <td>
+                                <span th:if="${product.stockQuantity > 20}" class="admin-badge admin-badge-success">
+                                    <i class="fas fa-check"></i> Còn Hàng
+                                </span>
+                                <span th:if="${product.stockQuantity > 0 && product.stockQuantity <= 20}" class="admin-badge admin-badge-warning">
+                                    <i class="fas fa-exclamation-triangle"></i> Sắp Hết
+                                </span>
+                                <span th:if="${product.stockQuantity <= 0}" class="admin-badge admin-badge-danger">
+                                    <i class="fas fa-times"></i> Hết Hàng
+                                </span>
+                            </td>
+                            <td>
+                                <div class="admin-actions">
+                                    <!-- Edit Button -->
+                                    <a th:href="@{/admin/products/{id}/edit(id=${product.productId})}" 
+                                       class="admin-btn admin-btn-info">
+                                        <i class="fas fa-edit"></i> <span>Sửa</span>
+                                    </a>
+                                    
+                                    <!-- Delete Button -->
+                                    <form th:action="@{/admin/products/{id}/delete(id=${product.productId})}" 
+                                          method="post" 
+                                          style="display: inline-block;">
+                                        <button type="submit" 
+                                                class="admin-btn admin-btn-danger"
+                                                onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này? Hành động này không thể hoàn tác.')">
+                                            <i class="fas fa-trash"></i> <span>Xóa</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(products)}">
+                            <td colspan="7" class="text-center text-muted">
+                                <i class="fas fa-box-open"></i>
+                                <div style="margin-top: 1rem; font-size: 1.2rem; font-weight: 600;">
+                                    Không có sản phẩm nào
+                                </div>
+                                <div style="margin-top: 0.5rem; color: #94a3b8;">
+                                    Hãy thêm sản phẩm đầu tiên để bắt đầu!
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Statistics -->
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon admin-stat-primary">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 th:text="${#lists.size(products)}">0</h3>
+                        <p>Tổng Sản Phẩm</p>
+                    </div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon admin-stat-success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 th:text="${#lists.size(#lists.select(products, p -> p.stockQuantity > 0))}">0</h3>
+                        <p>Còn Hàng</p>
+                    </div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon admin-stat-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 th:text="${#lists.size(#lists.select(products, p -> p.stockQuantity <= 5))}">0</h3>
+                        <p>Sắp Hết Hàng</p>
+                    </div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon admin-stat-warning">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 th:text="${#lists.size(#lists.select(products, p -> p.stockQuantity == 0))}">0</h3>
+                        <p>Hết Hàng</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Auto-hide flash messages after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const alerts = document.querySelectorAll('.admin-alert');
+                alerts.forEach(alert => {
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                });
+            }, 5000);
+        });
+
+        // Refresh products
+        function refreshProducts() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

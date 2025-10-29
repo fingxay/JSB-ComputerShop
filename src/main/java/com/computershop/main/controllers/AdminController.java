@@ -204,13 +204,34 @@ public class AdminController {
             model.addAttribute("categories", categories);
             model.addAttribute("newProduct", new Product());
             
-            return "admin/products"; // Will need to create this template
+            return "admin/products";
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
             model.addAttribute("products", List.of());
             model.addAttribute("categories", List.of());
             return "admin/products";
+        }
+    }
+
+    @GetMapping("/products/add")
+    public String addProductPage(HttpSession session, Model model) {
+        if (!isAdmin(session)) {
+            return "redirect:/login";
+        }
+        
+        try {
+            List<Category> categories = categoryService.getAllCategoriesOrderedByName();
+            
+            model.addAttribute("categories", categories);
+            model.addAttribute("newProduct", new Product());
+            
+            return "admin/add-product";
+            
+        } catch (Exception e) {
+            model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
+            model.addAttribute("categories", List.of());
+            return "admin/add-product";
         }
     }
 

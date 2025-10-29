@@ -5,6 +5,8 @@ import com.computershop.main.entities.User;
 import com.computershop.main.entities.OrderDetail;
 import com.computershop.main.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -212,7 +214,8 @@ public class OrderService {
      * Get recent orders by user ID
      */
     public List<Order> getRecentOrdersByUserId(Integer userId, int limit) {
-        return orderRepository.findRecentOrdersByUserId(userId, limit);
+        Pageable pageable = PageRequest.of(0, limit);
+        return orderRepository.findRecentOrdersByUserId(userId, pageable);
     }
     
     /**
@@ -251,6 +254,7 @@ public class OrderService {
      * Get recent orders for admin dashboard
      */
     public List<Order> getRecentOrders(int limit) {
-        return orderRepository.findRecentOrdersForAdmin(limit);
+        Pageable pageable = PageRequest.of(0, limit);
+        return orderRepository.findRecentOrdersForAdmin(pageable);
     }
 }

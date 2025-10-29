@@ -4,6 +4,7 @@ import com.computershop.main.entities.Product;
 // import com.computershop.main.entities.Product;
 import com.computershop.main.entities.Category;
 import com.computershop.main.entities.Image;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -85,8 +86,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * Find featured products for homepage (newest products with good stock)
      */
-    @Query(value = "SELECT TOP (?) * FROM products WHERE stock_quantity > 0 ORDER BY created_at DESC", nativeQuery = true)
-    List<Product> findFeaturedProducts(int limit);
+    @Query("SELECT p FROM Product p WHERE p.stockQuantity > 0 ORDER BY p.createdAt DESC")
+    List<Product> findFeaturedProducts(Pageable pageable);
     
     /**
      * Find all distinct categories
@@ -107,8 +108,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * Find low stock products
      */
-    @Query(value = "SELECT TOP (?) * FROM products WHERE stock_quantity < 20 ORDER BY stock_quantity ASC", nativeQuery = true)
-    List<Product> findLowStockProducts(int limit);
+    @Query("SELECT p FROM Product p WHERE p.stockQuantity < 20 ORDER BY p.stockQuantity ASC")
+    List<Product> findLowStockProducts(Pageable pageable);
     
     /**
      * Find all products with category and image eagerly loaded

@@ -19,12 +19,12 @@
                 <h1>Danh sách sản phẩm</h1>
                 <p class="text-muted">
                     <span th:if="${searchQuery != null and !#strings.isEmpty(searchQuery)}">
-                        Kết quả tìm kiếm cho "<strong th:text="${searchQuery}"></strong>" - 
+                        Kết quả tìm kiếm cho "<span class="search-highlight" th:text="${searchQuery}"></span>" - 
                     </span>
                     <span th:if="${selectedCategory != null and !#strings.isEmpty(selectedCategory)}">
-                        Danh mục: <strong th:text="${selectedCategory}"></strong> - 
+                        Danh mục: <span class="category-highlight" th:text="${selectedCategory}"></span> - 
                     </span>
-                    Tìm thấy <strong th:text="${totalProducts}">0</strong> sản phẩm
+                    Tìm thấy <span class="products-count"><i class="fas fa-box"></i><strong th:text="${totalProducts}">0</strong> sản phẩm</span>
                 </p>
             </div>
 

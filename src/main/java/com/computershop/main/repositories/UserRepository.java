@@ -2,6 +2,7 @@ package com.computershop.main.repositories;
 
 import com.computershop.main.entities.User;
 import com.computershop.main.entities.Role;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -59,6 +60,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     /**
      * Find recent users (for admin dashboard)
      */
-    @Query(value = "SELECT TOP :limit * FROM users ORDER BY user_id DESC", nativeQuery = true)
-    List<User> findRecentUsers(@Param("limit") int limit);
+    @Query("SELECT u FROM User u ORDER BY u.userId DESC")
+    List<User> findRecentUsers(Pageable pageable);
 }

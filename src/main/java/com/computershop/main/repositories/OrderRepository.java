@@ -2,6 +2,7 @@ package com.computershop.main.repositories;
 
 import com.computershop.main.entities.Order;
 import com.computershop.main.entities.User;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -76,8 +77,8 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     /**
      * Find recent orders by user ID with limit
      */
-    @Query(value = "SELECT TOP :limit * FROM orders WHERE user_id = :userId ORDER BY order_date DESC", nativeQuery = true)
-    List<Order> findRecentOrdersByUserId(@Param("userId") Integer userId, @Param("limit") int limit);
+    @Query("SELECT o FROM Order o WHERE o.user.userId = :userId ORDER BY o.orderDate DESC")
+    List<Order> findRecentOrdersByUserId(@Param("userId") Integer userId, Pageable pageable);
     
     /**
      * Get total spent by user ID
@@ -89,6 +90,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     /**
      * Find recent orders for admin dashboard
      */
-    @Query(value = "SELECT TOP :limit * FROM orders ORDER BY order_date DESC", nativeQuery = true)
-    List<Order> findRecentOrdersForAdmin(@Param("limit") int limit);
+    @Query("SELECT o FROM Order o ORDER BY o.orderDate DESC")
+    List<Order> findRecentOrdersForAdmin(Pageable pageable);
 }

@@ -4,6 +4,8 @@ import com.computershop.main.entities.User;
 import com.computershop.main.entities.Role;
 import com.computershop.main.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -272,7 +274,8 @@ public class UserService {
      * Get recent users
      */
     public List<User> getRecentUsers(int limit) {
-        return userRepository.findRecentUsers(limit);
+        Pageable pageable = PageRequest.of(0, limit);
+        return userRepository.findRecentUsers(pageable);
     }
     
     /**

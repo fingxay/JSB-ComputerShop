@@ -6,6 +6,8 @@ import com.computershop.main.entities.Category;
 import com.computershop.main.repositories.ProductRepository;
 // import com.computershop.main.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -311,7 +313,8 @@ public class ProductService {
      * Get low stock products
      */
     public List<Product> getLowStockProducts(int limit) {
-        return productRepository.findLowStockProducts(limit);
+        Pageable pageable = PageRequest.of(0, limit);
+        return productRepository.findLowStockProducts(pageable);
     }
     
     /**

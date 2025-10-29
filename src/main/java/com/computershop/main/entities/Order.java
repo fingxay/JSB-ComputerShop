@@ -23,6 +23,9 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails;
     
+    @Column(name = "status")
+    private String status = "pending"; // Default status
+    
     // Default constructor
     public Order() {}
     
@@ -63,6 +66,24 @@ public class Order {
     
     public void setOrderDetails(List<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
+    }
+    
+    public String getStatus() {
+        return status;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    // Helper method to calculate total amount
+    public double getTotalAmount() {
+        if (orderDetails == null || orderDetails.isEmpty()) {
+            return 0.0;
+        }
+        return orderDetails.stream()
+                .mapToDouble(detail -> detail.getPrice().doubleValue() * detail.getQuantity())
+                .sum();
     }
     
     @Override
