@@ -25,7 +25,7 @@ public class ProductService {
      * Get all products
      */
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findAllWithCategoryAndImage();
     }
     
     /**
@@ -234,7 +234,8 @@ public class ProductService {
      * Get featured products for homepage
      */
     public List<Product> getFeaturedProducts(int limit) {
-        return productRepository.findFeaturedProducts(limit);
+        List<Product> allFeatured = productRepository.findFeaturedProductsWithDetails();
+        return allFeatured.stream().limit(limit).toList();
     }
     
     /**

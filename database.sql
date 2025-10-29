@@ -101,19 +101,19 @@ INSERT INTO dbo.users (username, password_hash, email, roleid) VALUES
 ('customer1', 'hashed_password_2', 'customer1@example.com', 2),
 ('customer2', 'hashed_password_3', 'customer2@example.com', 2),
 ('staff1', 'hashed_password_4', 'staff1@example.com', 3),
-('supplier1', 'hashed_password_5', 'supplier1@example.com', 4);
-
+('supplier1', 'hashed_password_5', 'supplier1@example.com', 4),
+('a', 'aaaaaa_hashed', 'a@a.a', 1);
 
 GO
 
 INSERT INTO dbo.categories (category_name, description) VALUES
-('Bàn phím', 'Các loại bàn phím máy tính, bàn phím cơ, gaming'),
-('Chuột', 'Chuột máy tính, chuột gaming, chuột không dây'),
-('Tai nghe', 'Tai nghe gaming, tai nghe âm thanh, headset'),
-('Ghế gaming', 'Ghế gaming, ghế văn phòng chuyên dụng'),
-('Linh kiện', 'CPU, RAM, VGA, mainboard và các linh kiện máy tính'),
-('Màn hình', 'Màn hình máy tính, màn hình gaming, LCD, LED'),
-('Loa', 'Loa máy tính, loa gaming, sound system');
+('Keyboards', 'Computer keyboards, mechanical keyboards, gaming keyboards'),
+('Mice', 'Computer mice, gaming mice, wireless mice'),
+('Headsets', 'Gaming headsets, audio headphones, communication headsets'),
+('Gaming Chairs', 'Gaming chairs, office chairs, ergonomic seating'),
+('Components', 'CPU, RAM, GPU, motherboard and computer components'),
+('Monitors', 'Computer monitors, gaming displays, LCD, LED screens'),
+('Speakers', 'Computer speakers, gaming audio, sound systems');
 
 GO
 
@@ -132,16 +132,16 @@ INSERT INTO dbo.images (image_url) VALUES
 GO
 
 INSERT INTO dbo.products (product_name, description, price, stock_quantity, category_id, image_id) VALUES
-('Bàn phím cơ Logitech G915', 'Bàn phím cơ không dây cao cấp với switch tactile, đèn RGB', 4200000, 50, 1, 1),
-('Chuột gaming Razer DeathAdder V3', 'Chuột gaming với sensor Focus Pro 30K, tần số quét 8000Hz', 1890000, 75, 2, 2),
-('Tai nghe SteelSeries Arctis 7P', 'Tai nghe gaming không dây với âm thanh 7.1, mic ClearCast', 3200000, 30, 3, 3),
-('Ghế gaming DXRacer Formula Series', 'Ghế gaming ergonomic với đệm memory foam, điều chỉnh đa chiều', 8500000, 15, 4, 4),
-('CPU AMD Ryzen 7 5800X', 'Bộ vi xử lý 8 core 16 thread, xung nhịp 3.8GHz boost 4.7GHz', 7200000, 25, 5, 5),
-('Màn hình ASUS ROG Swift PG279QM', 'Màn hình gaming 27" QHD 240Hz IPS với G-Sync', 15800000, 20, 6, 6),
-('Loa Logitech Z623 2.1', 'Hệ thống loa 2.1 với công suất 200W, chứng nhận THX', 2800000, 40, 7, 7),
-('Bàn phím Corsair K70 RGB MK.2', 'Bàn phím cơ với switch Cherry MX Red, khung nhôm', 3100000, 35, 1, 8),
-('Chuột Logitech G Pro X Superlight', 'Chuột gaming siêu nhẹ 63g với sensor HERO 25K', 2650000, 45, 2, 9),
-('Tai nghe HyperX Cloud Alpha S', 'Tai nghe gaming với driver 50mm, 7.1 surround sound', 2400000, 60, 3, 10);
+('Logitech G915 Mechanical Keyboard', 'Premium wireless mechanical keyboard with tactile switches, RGB lighting', 4200000, 50, 1, 1),
+('Razer DeathAdder V3 Gaming Mouse', 'Gaming mouse with Focus Pro 30K sensor, 8000Hz polling rate', 1890000, 75, 2, 2),
+('SteelSeries Arctis 7P Headset', 'Wireless gaming headset with 7.1 audio, ClearCast microphone', 3200000, 30, 3, 3),
+('DXRacer Formula Series Gaming Chair', 'Ergonomic gaming chair with memory foam padding, multi-directional adjustment', 8500000, 15, 4, 4),
+('AMD Ryzen 7 5800X CPU', '8-core 16-thread processor, 3.8GHz base clock, 4.7GHz boost', 7200000, 25, 5, 5),
+('ASUS ROG Swift PG279QM Monitor', '27" QHD 240Hz IPS gaming monitor with G-Sync technology', 15800000, 20, 6, 6),
+('Logitech Z623 2.1 Speakers', '2.1 speaker system with 200W power output, THX certified', 2800000, 40, 7, 7),
+('Corsair K70 RGB MK.2 Keyboard', 'Mechanical keyboard with Cherry MX Red switches, aluminum frame', 3100000, 35, 1, 8),
+('Logitech G Pro X Superlight Mouse', 'Ultra-lightweight 63g gaming mouse with HERO 25K sensor', 2650000, 45, 2, 9),
+('HyperX Cloud Alpha S Headset', 'Gaming headset with 50mm drivers, 7.1 surround sound', 2400000, 60, 3, 10);
 
 GO
 
@@ -159,3 +159,50 @@ INSERT INTO dbo.order_details (order_id, product_id, quantity, price) VALUES
 GO
 
 
+-- Insert sample data for testing products page
+
+-- Insert additional images
+INSERT INTO images (image_url) VALUES
+('/Images/keyboard1.jpg'),
+('/Images/keyboard2.jpg'),
+('/Images/mouse1.jpg'),
+('/Images/mouse2.jpg'),
+('/Images/headset1.jpg'),
+('/Images/headset2.jpg'),
+('/Images/chair1.jpg'),
+('/Images/ssd1.jpg'),
+('/Images/ram1.jpg'),
+('/Images/gpu1.jpg');
+
+-- Insert additional products
+INSERT INTO products (product_name, description, price, stock_quantity, category_id, image_id, created_at) VALUES
+-- Keyboards
+('Razer BlackWidow V3 Mechanical Keyboard', 'Gaming mechanical keyboard with Razer Green switches, RGB Chroma', 3200000, 25, 1, 1, GETDATE()),
+('Corsair K70 RGB MK.2 Keyboard', 'Mechanical keyboard with Cherry MX Red switches, aluminum frame', 2850000, 18, 1, 2, GETDATE()),
+('Logitech G915 TKL Keyboard', 'Wireless mechanical keyboard, GL Tactile switches, ultra-slim design', 4200000, 12, 1, 1, GETDATE()),
+
+-- Mice
+('Logitech G502 HERO Gaming Mouse', 'Wired gaming mouse, HERO 25K sensor, 11 programmable buttons', 1450000, 35, 2, 3, GETDATE()),
+('Razer DeathAdder V3 Gaming Mouse', 'Ergonomic gaming mouse, Focus Pro 30K sensor', 1650000, 28, 2, 4, GETDATE()),
+('Corsair M65 RGB ELITE Gaming Mouse', 'FPS gaming mouse, aluminum frame, adjustable weight', 1380000, 22, 2, 3, GETDATE()),
+
+-- Headsets
+('SteelSeries Arctis 7 Headset', 'Wireless gaming headset, DTS Headphone:X 2.0', 3800000, 15, 3, 5, GETDATE()),
+('HyperX Cloud II Gaming Headset', 'Gaming headset with microphone, virtual 7.1 audio', 1950000, 30, 3, 6, GETDATE()),
+('Audio-Technica ATH-M50xBT2 Headphones', 'Bluetooth studio headphones, high-quality audio', 4200000, 8, 3, 5, GETDATE()),
+
+-- Gaming Chairs
+('DXRacer Formula Series Gaming Chair', 'Ergonomic gaming chair, premium PU leather, multi-directional adjustment', 8500000, 6, 4, 7, GETDATE()),
+('Noblechairs EPIC Gaming Chair', 'Premium gaming chair, real leather, sturdy steel frame', 15200000, 3, 4, 7, GETDATE()),
+
+-- Components
+('Samsung 980 PRO 1TB SSD', 'NVMe PCIe 4.0 SSD, 7000MB/s read speed', 2850000, 45, 5, 8, GETDATE()),
+('Corsair Vengeance LPX 16GB RAM', 'DDR4 3200MHz RAM, 2x8GB kit, aluminum heat spreader', 1650000, 38, 5, 9, GETDATE()),
+('MSI RTX 4070 Ti SUPER Graphics Card', 'High-end gaming graphics card, 16GB GDDR6X', 25500000, 8, 5, 10, GETDATE()),
+('Kingston NV2 500GB SSD', 'Budget NVMe SSD, good performance for office use', 950000, 52, 5, 8, GETDATE()),
+('G.Skill Ripjaws V 32GB RAM', 'DDR4 3600MHz RAM, 2x16GB kit, high performance', 3200000, 15, 5, 9, GETDATE());
+
+-- Update some products to have low stock for testing
+UPDATE products SET stock_quantity = 2 WHERE product_name LIKE '%Noblechairs%';
+UPDATE products SET stock_quantity = 4 WHERE product_name LIKE '%Audio-Technica%';
+UPDATE products SET stock_quantity = 0 WHERE product_name LIKE '%G915%'; -- Out of stock for testing

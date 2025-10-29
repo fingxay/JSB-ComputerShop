@@ -230,6 +230,24 @@ public class OrderService {
     }
     
     /**
+     * Get total revenue from all orders
+     */
+    public double getTotalRevenue() {
+        try {
+            List<Order> orders = orderRepository.findAll();
+            return orders.stream()
+                    .mapToDouble(order -> {
+                        return order.getOrderDetails().stream()
+                                .mapToDouble(detail -> detail.getPrice().doubleValue() * detail.getQuantity())
+                                .sum();
+                    })
+                    .sum();
+        } catch (Exception e) {
+            return 0.0;
+        }
+    }
+    
+    /**
      * Get recent orders for admin dashboard
      */
     public List<Order> getRecentOrders(int limit) {

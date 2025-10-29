@@ -17,33 +17,50 @@
         <div class="container">
             <div class="page-header">
                 <h1>Danh sách sản phẩm</h1>
-                <p class="text-muted">Khám phá các sản phẩm chất lượng cao cho setup máy tính của bạn</p>
+                <p class="text-muted">
+                    <span th:if="${searchQuery != null and !#strings.isEmpty(searchQuery)}">
+                        Kết quả tìm kiếm cho "<strong th:text="${searchQuery}"></strong>" - 
+                    </span>
+                    <span th:if="${selectedCategory != null and !#strings.isEmpty(selectedCategory)}">
+                        Danh mục: <strong th:text="${selectedCategory}"></strong> - 
+                    </span>
+                    Tìm thấy <strong th:text="${totalProducts}">0</strong> sản phẩm
+                </p>
             </div>
 
             <!-- Filters and Search -->
             <div class="filters-section">
+                <form method="get" action="/products">
+                    <input type="hidden" name="search" th:value="${searchQuery}" />
                 <div class="filters">
                     <div class="filter-group">
                         <label>Danh mục:</label>
-                        <select class="form-control" name="category">
-                            <option value="">Tất cả danh mục</option>
-                            <option value="keyboard">Bàn phím</option>
-                            <option value="mouse">Chuột</option>
-                            <option value="headset">Tai nghe</option>
-                            <option value="chair">Ghế gaming</option>
-                            <option value="components">Linh kiện</option>
+                        <select class="form-control" name="category" th:value="${selectedCategory}">
+                            <option value="">Tất cả</option>
+                            <option th:each="category : ${categories}" 
+                                    th:value="${category}" 
+                                    th:text="${category}"
+                                    th:selected="${category == selectedCategory}">Category</option>
                         </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Khoảng giá:</label>
+                        <input type="number" name="minPrice" placeholder="Từ" th:value="${minPrice}" class="form-control price-input" />
+                        <span>-</span>
+                        <input type="number" name="maxPrice" placeholder="Đến" th:value="${maxPrice}" class="form-control price-input" />
                     </div>
                     <div class="filter-group">
                         <label>Sắp xếp:</label>
                         <select class="form-control" name="sort">
-                            <option value="popular">Phổ biến nhất</option>
-                            <option value="price-asc">Giá thấp đến cao</option>
-                            <option value="price-desc">Giá cao đến thấp</option>
-                            <option value="newest">Mới nhất</option>
+                            <option value="name" th:selected="${currentSort == 'name'}">Tên sản phẩm</option>
+                            <option value="popular" th:selected="${currentSort == 'popular'}">Phổ biến nhất</option>
+                            <option value="price-asc" th:selected="${currentSort == 'price-asc'}">Giá thấp đến cao</option>
+                            <option value="price-desc" th:selected="${currentSort == 'price-desc'}">Giá cao đến thấp</option>
                         </select>
                     </div>
+                    <button type="submit" class="btn btn-primary">Lọc</button>
                 </div>
+                </form>
             </div>
 
             <!-- Products Grid -->
@@ -51,63 +68,47 @@
                 <!-- Server-side products -->
                 <div class="product-card" th:each="product : ${products}">
                     <div class="product-image">
-                        <img th:src="${product.imageUrl}" th:alt="${product.name}" src="/Images/placeholder.svg" />
+                        <img th:src="${product.image != null ? product.image.imageUrl : '/Images/placeholder.svg'}" 
+                             th:alt="${product.productName}" 
+                             src="/Images/placeholder.svg"
+                             onerror="this.src='/Images/placeholder.svg'" />
                         <div class="product-overlay">
-                            <button type="button" class="btn btn-primary add-to-cart-btn" th:attr="data-id=${product.id}">
+                            <button type="button" class="btn btn-primary add-to-cart-btn" th:attr="data-id=${product.productId}">
                                 Thêm vào giỏ
                             </button>
                         </div>
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name" th:text="${product.name}">Sample product</h3>
-                        <div class="product-brand" th:text="${product.brand}">Brand</div>
+                        <h3 class="product-name" th:text="${product.productName}">Sample product</h3>
+                        <div class="product-brand" th:text="${product.category != null ? product.category.categoryName : 'N/A'}">Category</div>
                         <div class="product-price">
                             <span class="price" th:text="${#numbers.formatDecimal(product.price,1,'COMMA',0,'POINT')} + ' ₫'">0 ₫</span>
                         </div>
+                        <div class="product-stock" th:if="${product.stockQuantity <= 5 and product.stockQuantity > 0}" 
+                             style="color: orange; font-size: 0.9em;">
+                            Chỉ còn <span th:text="${product.stockQuantity}">0</span> sản phẩm
+                        </div>
+                        <div class="product-stock" th:if="${product.stockQuantity == 0}" 
+                             style="color: red; font-size: 0.9em;">
+                            Hết hàng
+                        </div>
                     </div>
                 </div>
 
-                <!-- Demo products if no data -->
-                <div class="product-card" th:if="${products == null or #lists.isEmpty(products)}">
-                    <div class="product-image">
-                        <img src="/Images/keyboard.svg" alt="Keyboard" />
-                        <div class="product-overlay">
-                            <button type="button" class="btn btn-primary">Thêm vào giỏ</button>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Bàn phím cơ Razer BlackWidow</h3>
-                        <div class="product-brand">Razer</div>
-                        <div class="product-price"><span class="price">2.500.000 ₫</span></div>
-                    </div>
-                </div>
-
-                <!-- More demo products -->
-                <div class="product-card" th:if="${products == null or #lists.isEmpty(products)}">
-                    <div class="product-image">
-                        <img src="/Images/mouse.svg" alt="Mouse" />
-                        <div class="product-overlay">
-                            <button type="button" class="btn btn-primary">Thêm vào giỏ</button>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Chuột Logitech G502 Hero</h3>
-                        <div class="product-brand">Logitech</div>
-                        <div class="product-price"><span class="price">1.200.000 ₫</span></div>
-                    </div>
-                </div>
-
-                <div class="product-card" th:if="${products == null or #lists.isEmpty(products)}">
-                    <div class="product-image">
-                        <img src="/Images/headset.svg" alt="Headset" />
-                        <div class="product-overlay">
-                            <button type="button" class="btn btn-primary">Thêm vào giỏ</button>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">Tai nghe SteelSeries Arctis 7</h3>
-                        <div class="product-brand">SteelSeries</div>
-                        <div class="product-price"><span class="price">3.500.000 ₫</span></div>
+                <!-- Empty state when no products found -->
+                <div th:if="${products == null or #lists.isEmpty(products)}" class="empty-state">
+                    <div class="empty-message">
+                        <h3>Không tìm thấy sản phẩm</h3>
+                        <p th:if="${searchQuery != null and !#strings.isEmpty(searchQuery)}">
+                            Không có sản phẩm nào phù hợp với từ khóa "<strong th:text="${searchQuery}"></strong>"
+                        </p>
+                        <p th:if="${selectedCategory != null and !#strings.isEmpty(selectedCategory)}">
+                            Không có sản phẩm nào trong danh mục "<strong th:text="${selectedCategory}"></strong>"
+                        </p>
+                        <p th:if="${(searchQuery == null or #strings.isEmpty(searchQuery)) and (selectedCategory == null or #strings.isEmpty(selectedCategory))}">
+                            Hiện tại chưa có sản phẩm nào trong cửa hàng.
+                        </p>
+                        <a href="/products" class="btn btn-primary">Xem tất cả sản phẩm</a>
                     </div>
                 </div>
             </div>

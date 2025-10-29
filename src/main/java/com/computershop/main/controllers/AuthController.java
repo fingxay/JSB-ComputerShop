@@ -139,7 +139,7 @@ public class AuthController {
                 
                 // Redirect based on role
                 String roleName = user.getRole().getRoleName();
-                if ("ADMIN".equals(roleName)) {
+                if ("admin".equals(roleName)) {
                     return "redirect:/admin/dashboard";
                 } else {
                     return "redirect:/";

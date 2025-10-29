@@ -77,47 +77,27 @@
                     <!-- Thymeleaf: iterate over products provided by controller -->
                     <div class="product-card" th:each="product : ${products}">
                         <div class="product-image">
-                            <img th:src="${product.imageUrl}" th:alt="${product.name}" src="/Images/placeholder.svg" />
+                            <img th:src="${product.image != null ? product.image.imageUrl : '/Images/placeholder.svg'}" 
+                                 th:alt="${product.productName}" 
+                                 src="/Images/placeholder.svg"
+                                 onerror="this.src='/Images/placeholder.svg'" />
                             <div class="product-overlay">
-                                <button type="button" class="btn btn-primary add-to-cart-btn" th:attr="data-id=${product.id}">Thêm vào giỏ</button>
+                                <button type="button" class="btn btn-primary add-to-cart-btn" th:attr="data-id=${product.productId}">Thêm vào giỏ</button>
                             </div>
                         </div>
                         <div class="product-info">
-                            <h3 class="product-name" th:text="${product.name}">Sample product</h3>
-                            <div class="product-brand" th:text="${product.brand}">Brand</div>
+                            <h3 class="product-name" th:text="${product.productName}">Sample product</h3>
+                            <div class="product-brand" th:text="${product.category != null ? product.category.categoryName : 'N/A'}">Category</div>
                             <div class="product-price">
                                 <span class="price" th:text="${#numbers.formatDecimal(product.price,1,'COMMA',0,'POINT')} + ' ₫'">0 ₫</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Fallback cards when no server data provided -->
-                    <div class="product-card" th:if="${products == null}">
-                        <div class="product-image">
-                            <img src="/Images/keyboard.svg" alt="Keyboard" />
-                            <div class="product-overlay">
-                                <button type="button" class="btn btn-primary add-to-cart-btn" data-id="demo-1">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Bàn phím cơ Mechanical</h3>
-                            <div class="product-brand">KeyMaster</div>
-                            <div class="product-price"><span class="price">1.200.000 ₫</span></div>
-                        </div>
-                    </div>
-
-                    <div class="product-card" th:if="${products == null}">
-                        <div class="product-image">
-                            <img src="/Images/mouse.svg" alt="Mouse" />
-                            <div class="product-overlay">
-                                <button type="button" class="btn btn-primary add-to-cart-btn" data-id="demo-2">Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-name">Chuột gaming không dây</h3>
-                            <div class="product-brand">ProMouse</div>
-                            <div class="product-price"><span class="price">450.000 ₫</span></div>
-                        </div>
+                    <!-- Message when no products available -->
+                    <div th:if="${products == null or #lists.isEmpty(products)}" class="no-products-message">
+                        <p>Đang cập nhật sản phẩm mới...</p>
+                        <a href="/products" class="btn btn-primary">Xem tất cả sản phẩm</a>
                     </div>
                 </div>
             </section>

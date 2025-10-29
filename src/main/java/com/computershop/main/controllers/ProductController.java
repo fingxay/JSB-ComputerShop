@@ -27,6 +27,7 @@ public class ProductController {
     @GetMapping
     public String productsPage(@RequestParam(value = "category", required = false) String category,
                               @RequestParam(value = "search", required = false) String search,
+                              @RequestParam(value = "q", required = false) String q,
                               @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
                               @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
                               @RequestParam(value = "sort", required = false, defaultValue = "name") String sort,
@@ -37,36 +38,48 @@ public class ProductController {
         try {
             List<Product> products;
             
-            // Apply filters and search
-            if (search != null && !search.trim().isEmpty()) {
-                products = productService.searchProductsByName(search.trim());
+            // Step 1: Get base products based on filters
+            String searchQuery = search != null ? search : q; // Handle both 'search' and 'q' params
+            if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+                products = productService.searchProductsByName(searchQuery.trim());
             } else if (category != null && !category.trim().isEmpty()) {
                 products = productService.getProductsByCategoryName(category);
             } else {
                 products = productService.getAllProducts();
             }
             
-            // Apply price filters
+            // Step 2: Apply price filters on existing results
             if (minPrice != null || maxPrice != null) {
-                products = productService.filterProductsByPriceRange(
-                    minPrice != null ? minPrice : BigDecimal.ZERO,
-                    maxPrice != null ? maxPrice : BigDecimal.valueOf(Double.MAX_VALUE)
-                );
+                BigDecimal min = minPrice != null ? minPrice : BigDecimal.ZERO;
+                BigDecimal max = maxPrice != null ? maxPrice : BigDecimal.valueOf(Double.MAX_VALUE);
+                products = products.stream()
+                    .filter(p -> p.getPrice().compareTo(min) >= 0 && p.getPrice().compareTo(max) <= 0)
+                    .toList();
             }
             
-            // Apply sorting
+            // Step 3: Apply sorting to filtered results
             switch (sort) {
                 case "price-asc":
-                    products = productService.getProductsSortedByPriceAsc();
+                    products = products.stream()
+                        .sorted((p1, p2) -> p1.getPrice().compareTo(p2.getPrice()))
+                        .toList();
                     break;
                 case "price-desc":
-                    products = productService.getProductsSortedByPriceDesc();
+                    products = products.stream()
+                        .sorted((p1, p2) -> p2.getPrice().compareTo(p1.getPrice()))
+                        .toList();
                     break;
                 case "popular":
-                    products = productService.getTopSellingProducts();
+                    // For now, sort by stock quantity desc as a proxy for popularity
+                    products = products.stream()
+                        .sorted((p1, p2) -> Integer.compare(p2.getStockQuantity(), p1.getStockQuantity()))
+                        .toList();
                     break;
+                case "name":
                 default:
-                    // Default: by name
+                    products = products.stream()
+                        .sorted((p1, p2) -> p1.getProductName().compareToIgnoreCase(p2.getProductName()))
+                        .toList();
                     break;
             }
             
@@ -76,7 +89,7 @@ public class ProductController {
             
             // Filter parameters
             model.addAttribute("selectedCategory", category);
-            model.addAttribute("searchQuery", search);
+            model.addAttribute("searchQuery", searchQuery);
             model.addAttribute("minPrice", minPrice);
             model.addAttribute("maxPrice", maxPrice);
             model.addAttribute("currentSort", sort);
@@ -90,7 +103,7 @@ public class ProductController {
         
         return "products";
     }
-
+    
     @GetMapping("/{id}")
     public String productDetail(@PathVariable("id") Integer productId, Model model) {
         try {
@@ -129,32 +142,7 @@ public class ProductController {
 
     @GetMapping("/search")
     public String searchProducts(@RequestParam("q") String query, Model model) {
-        try {
-            if (query == null || query.trim().isEmpty()) {
-                return "redirect:/products";
-            }
-            
-            List<Product> products = productService.searchProductsByName(query.trim());
-            List<Product> descriptionResults = productService.searchProductsByDescription(query.trim());
-            
-            // Combine results (avoid duplicates)
-            for (Product product : descriptionResults) {
-                if (!products.contains(product)) {
-                    products.add(product);
-                }
-            }
-            
-            model.addAttribute("products", products);
-            model.addAttribute("searchQuery", query);
-            model.addAttribute("totalProducts", products.size());
-            model.addAttribute("categories", productService.getAllCategoryNames());
-            
-            return "products";
-            
-        } catch (Exception e) {
-            model.addAttribute("error", "Đã xảy ra lỗi tìm kiếm: " + e.getMessage());
-            return "redirect:/products";
-        }
+        return "redirect:/products?search=" + query;
     }
 
     @GetMapping("/category/{category}")

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - JSB ComputerShop</title>
+    <link rel="stylesheet" th:href="@{/CSS/style.css}" />
+    <link rel="stylesheet" th:href="@{/CSS/header.css}" />
+    <link rel="stylesheet" th:href="@{/CSS/footer.css}" />
+    <link rel="stylesheet" th:href="@{/CSS/admin.css}" />
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-nav">
+                <div class="logo">
+                    <h1>Admin Panel</h1>
+                </div>
+                <div class="admin-menu">
+                    <nav>
+                        <ul>
+                            <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+                            <li><a href="/admin/users">Quản lý Users</a></li>
+                            <li><a href="/admin/products">Quản lý Sản phẩm</a></li>
+                            <li><a href="/admin/orders">Quản lý Đơn hàng</a></li>
+                            <li><a href="/admin/categories">Danh mục</a></li>
+                        </ul>
+                    </nav>
+                    <div class="admin-user">
+                        <span>Xin chào, <strong th:text="${session.username}">Admin</strong></span>
+                        <a href="/logout" class="btn-logout">Đăng xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <div class="container">
+            <div class="admin-content">
+                <div class="page-header">
+                    <h2>Dashboard Tổng quan</h2>
+                    <p class="text-muted">Thông tin tổng quan về hệ thống</p>
+                </div>
+
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3 th:text="${totalUsers}">0</h3>
+                            <p>Tổng Users</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-info">
+                            <h3 th:text="${totalProducts}">0</h3>
+                            <p>Tổng Sản phẩm</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🛒</div>
+                        <div class="stat-info">
+                            <h3 th:text="${totalOrders}">0</h3>
+                            <p>Tổng Đơn hàng</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <h3 th:text="${#numbers.formatDecimal(totalRevenue,1,'COMMA',0,'POINT')} + '₫'">0₫</h3>
+                            <p>Doanh thu</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h3>Hoạt động gần đây</h3>
+                    </div>
+                    <div class="content-grid">
+                        <!-- Recent Users -->
+                        <div class="content-card">
+                            <h4>Users mới đăng ký</h4>
+                            <div class="list-items" th:if="${recentUsers != null and !recentUsers.empty}">
+                                <div class="list-item" th:each="user : ${recentUsers}">
+                                    <div class="item-info">
+                                        <span class="item-name" th:text="${user.username}">User</span>
+                                        <span class="item-meta" th:text="${user.email}">email</span>
+                                    </div>
+                                    <span class="item-role" th:text="${user.role.roleName}">Role</span>
+                                </div>
+                            </div>
+                            <p th:if="${recentUsers == null or recentUsers.empty}" class="text-muted">Chưa có users mới</p>
+                        </div>
+
+                        <!-- Low Stock Products -->
+                        <div class="content-card">
+                            <h4>Sản phẩm sắp hết hàng</h4>
+                            <div class="list-items" th:if="${lowStockProducts != null and !lowStockProducts.empty}">
+                                <div class="list-item" th:each="product : ${lowStockProducts}">
+                                    <div class="item-info">
+                                        <span class="item-name" th:text="${product.productName}">Product</span>
+                                        <span class="item-meta" th:text="${product.category?.categoryName}">Category</span>
+                                    </div>
+                                    <span class="item-stock" th:classappend="${product.stockQuantity < 5} ? 'critical' : ''" 
+                                          th:text="'Còn ' + ${product.stockQuantity} + ' sp'">Stock</span>
+                                </div>
+                            </div>
+                            <p th:if="${lowStockProducts == null or lowStockProducts.empty}" class="text-muted">Tất cả sản phẩm đều đủ hàng</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="admin-section">
+                    <div class="section-header">
+                        <h3>Thao tác nhanh</h3>
+                    </div>
+                    <div class="quick-actions">
+                        <a href="/admin/products/create" class="action-btn primary">
+                            <span class="btn-icon">➕</span>
+                            Thêm Sản phẩm
+                        </a>
+                        <a href="/admin/users" class="action-btn secondary">
+                            <span class="btn-icon">👥</span>
+                            Quản lý Users
+                        </a>
+                        <a href="/admin/orders" class="action-btn info">
+                            <span class="btn-icon">📋</span>
+                            Xem Đơn hàng
+                        </a>
+                        <a href="/admin/categories" class="action-btn warning">
+                            <span class="btn-icon">📂</span>
+                            Quản lý Danh mục
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script th:src="@{/JavaScript/header.js}"></script>
+    <script th:src="@{/JavaScript/main.js}"></script>
+</body>
+</html>

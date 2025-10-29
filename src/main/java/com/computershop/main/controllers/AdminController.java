@@ -40,7 +40,7 @@ public class AdminController {
      */
     private boolean isAdmin(HttpSession session) {
         String role = (String) session.getAttribute("role");
-        return "ADMIN".equals(role);
+        return "admin".equals(role);
     }
 
     @GetMapping("/dashboard")
@@ -55,6 +55,7 @@ public class AdminController {
             model.addAttribute("totalProducts", productService.getTotalProducts());
             model.addAttribute("totalCategories", categoryService.getAllCategories().size());
             model.addAttribute("totalOrders", orderService.getTotalOrders());
+            model.addAttribute("totalRevenue", orderService.getTotalRevenue());
             
             // Recent activities
             model.addAttribute("recentOrders", orderService.getRecentOrders(10));

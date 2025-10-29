@@ -85,8 +85,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * Find featured products for homepage (newest products with good stock)
      */
-    @Query(value = "SELECT TOP :limit * FROM products WHERE stock_quantity > 0 ORDER BY created_at DESC", nativeQuery = true)
-    List<Product> findFeaturedProducts(@Param("limit") int limit);
+    @Query(value = "SELECT TOP (?) * FROM products WHERE stock_quantity > 0 ORDER BY created_at DESC", nativeQuery = true)
+    List<Product> findFeaturedProducts(int limit);
     
     /**
      * Find all distinct categories
@@ -107,6 +107,18 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     /**
      * Find low stock products
      */
-    @Query(value = "SELECT TOP :limit * FROM products WHERE stock_quantity < 20 ORDER BY stock_quantity ASC", nativeQuery = true)
-    List<Product> findLowStockProducts(@Param("limit") int limit);
+    @Query(value = "SELECT TOP (?) * FROM products WHERE stock_quantity < 20 ORDER BY stock_quantity ASC", nativeQuery = true)
+    List<Product> findLowStockProducts(int limit);
+    
+    /**
+     * Find all products with category and image eagerly loaded
+     */
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.category LEFT JOIN FETCH p.image")
+    List<Product> findAllWithCategoryAndImage();
+    
+    /**
+     * Find featured products with category and image eagerly loaded
+     */
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.category LEFT JOIN FETCH p.image WHERE p.stockQuantity > 0 ORDER BY p.createdAt DESC")
+    List<Product> findFeaturedProductsWithDetails();
 }

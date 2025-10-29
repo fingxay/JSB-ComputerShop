@@ -34,7 +34,7 @@
             <tbody>
             <tr th:each="item : ${cartItems}">
                 <td class="product-col">
-                    <img th:src="${item.imageUrl}" alt="img" class="thumb"/>
+                    <img th:src="${item.imageUrl}" alt="img" class="thumb" onerror="this.src='/Images/placeholder.svg'"/>
                     <div class="product-info">
                         <div class="name" th:text="${item.productName}"></div>
                     </div>
