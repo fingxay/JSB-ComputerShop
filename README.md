@@ -46,7 +46,7 @@ Chọn một trong các IDE sau:
 
 ---
 
-## � Công nghệ sử dụng
+## Công nghệ sử dụng
 
 ### Backend
 - **Spring Boot 3.5.6** - Framework chính
