@@ -118,16 +118,16 @@ INSERT INTO dbo.categories (category_name, description) VALUES
 GO
 
 INSERT INTO dbo.images (image_url) VALUES
-('/Images/keyboard-1.jpg'),
-('/Images/mouse-1.jpg'),
-('/Images/headset-1.jpg'),
-('/Images/chair-1.jpg'),
-('/Images/cpu-1.jpg'),
-('/Images/monitor-1.jpg'),
-('/Images/speaker-1.jpg'),
-('/Images/keyboard-2.jpg'),
-('/Images/mouse-2.jpg'),
-('/Images/headset-2.jpg');
+('https://www.logitechg.com/content/dam/gaming/en/products/g915/g915-gallery-2.png'),
+('https://product.hstatic.net/200000722513/product/thumbchuot_6ed5e43202c9498aacde369cb95573b3_0859ba8bea744152819e77b7e6d0c7f0_master.gif'),
+('https://owlgaming.vn/wp-content/uploads/2024/06/ARCTIS-7P-1.jpg'),
+('https://www.dxracer-europe.com/bilder/artiklar/32125.jpg?m=1747120248'),
+('https://bizweb.dktcdn.net/100/329/122/files/amd-5700g-02.jpg?v=1633579298069'),
+('https://dlcdnwebimgs.asus.com/gain/72C16A36-4EE3-4AC4-A58A-35F6B8A2FB6F/w717/h525/fwebp'),
+('https://bizweb.dktcdn.net/thumb/grande/100/487/147/products/loa-logitech-speaker-system-z623-eu-246c339d-c1e4-4b1d-9700-1ee364c0ec0d.jpg?v=1691140134430'),
+('https://cdn2.cellphones.com.vn/x/media/catalog/product/_/0/_0000_43020_keyboard_corsair_k70_rgb_m.jpg'),
+('https://product.hstatic.net/200000722513/product/g-pro-x-superlight-wireless-black-666_83650815ce2e486f9108dbbb17c29159_1450bb4a9bd34dcb92fc77f627eb600d.jpg'),
+('https://row.hyperx.com/cdn/shop/products/hyperx_cloud_alpha_s_blackblue_1_main.jpg?v=1662567757&width=1920');
 
 GO
 
