@@ -18,7 +18,7 @@
             <!-- Navigation based on user role -->
             <nav class="nav">
                 <!-- Guest navigation -->
-                <div th:if="${session.user == null}" class="nav-guest">
+                <div th:if="${session.currentUser == null}" class="nav-guest">
                     <a href="/" class="nav-link">Trang chủ</a>
                     <a href="/products" class="nav-link">Sản phẩm</a>
                     <a href="/about" class="nav-link">Giới thiệu</a>
@@ -31,7 +31,7 @@
                 </div>
                 
                 <!-- User navigation -->
-                <div th:if="${session.user != null && session.user.role.roleName == 'customer'}" class="nav-user">
+                <div th:if="${session.currentUser != null && session.role != 'admin'}" class="nav-user">
                     <a href="/" class="nav-link">Trang chủ</a>
                     <a href="/products" class="nav-link">Sản phẩm</a>
                     <a href="/about" class="nav-link">Giới thiệu</a>
@@ -39,16 +39,15 @@
                         <span>Giỏ hàng</span>
                         <span class="cart-count" th:if="${session.cartCount != null}" th:text="${session.cartCount}">0</span>
                     </a>
-                    <a href="/orders" class="nav-link">Lịch sử mua</a>
                     
                     <div class="user-menu">
                         <button class="user-menu-btn" onclick="toggleUserMenu()">
-                            <span th:text="${session.user.username}">User</span>
+                            <span th:text="${session.username}">User</span>
                             <span class="dropdown-arrow">▼</span>
                         </button>
                         <div class="user-menu-dropdown" id="userMenuDropdown">
                             <a href="/profile" class="dropdown-item">Thông tin tài khoản</a>
-                            <a href="/orders" class="dropdown-item">Đơn hàng của tôi</a>
+                            <a href="/orders" class="dropdown-item">Đơn hàng</a>
                             <hr class="dropdown-divider">
                             <a href="/logout" class="dropdown-item">Đăng xuất</a>
                         </div>
@@ -56,19 +55,19 @@
                 </div>
                 
                 <!-- Admin navigation -->
-                <div th:if="${session.user != null && session.user.role.roleName == 'admin'}" class="nav-admin">
+                <div th:if="${session.currentUser != null && session.role == 'admin'}" class="nav-admin">
                     <a href="/admin/products" class="nav-link">Danh sách sản phẩm</a>
                     <a href="/admin/users" class="nav-link">Danh sách tài khoản</a>
                     <a href="/admin/orders" class="nav-link">Danh sách đơn hàng</a>
                     
                     <div class="user-menu">
                         <button class="user-menu-btn" onclick="toggleUserMenu()">
-                            <span th:text="${session.user.username}">Admin</span>
+                            <span th:text="${session.username}">Admin</span>
                             <span class="dropdown-arrow">▼</span>
                         </button>
                         <div class="user-menu-dropdown" id="userMenuDropdown">
-                            <a href="/admin/dashboard" class="dropdown-item">Dashboard</a>
                             <a href="/profile" class="dropdown-item">Thông tin tài khoản</a>
+                            <a href="/admin/dashboard" class="dropdown-item">Dashboard</a>
                             <hr class="dropdown-divider">
                             <a href="/logout" class="dropdown-item">Đăng xuất</a>
                         </div>
