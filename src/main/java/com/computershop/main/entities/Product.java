@@ -33,7 +33,7 @@ public class Product {
     @JoinColumn(name = "image_id")
     private Image image;
     
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     
     // Default constructor

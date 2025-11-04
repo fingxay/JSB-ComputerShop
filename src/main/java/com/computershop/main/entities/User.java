@@ -14,7 +14,7 @@ public class User {
     @Column(name = "username", nullable = false, length = 255)
     private String username;
     
-    @Column(name = "password_hash", nullable = false, length = 255)
+    @Column(name = "password_hash", length = 255)
     private String passwordHash;
     
     @Column(name = "email", nullable = false, unique = true, length = 255)

@@ -1,4 +1,6 @@
 -- database reset and creation
+
+
 USE master;
 GO
 IF DB_ID(N'computershop') IS NOT NULL
@@ -13,6 +15,10 @@ USE [computershop];
 GO
 -- 
 
+IF NOT EXISTS (SELECT * FROM sys.sql_logins WHERE name = N'fuongtuan')
+BEGIN
+    CREATE LOGIN [fuongtuan] WITH PASSWORD=N'toilabanhmochi', DEFAULT_DATABASE=[computershop], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF;
+END
 -- database schema
 
 
@@ -97,12 +103,11 @@ INSERT INTO dbo.roles (role_id, role_name) VALUES
 GO
 
 INSERT INTO dbo.users (username, password_hash, email, roleid) VALUES
-('admin', 'hashed_password_1', 'admin@example.com', 1),
-('customer1', 'hashed_password_2', 'customer1@example.com', 2),
-('customer2', 'hashed_password_3', 'customer2@example.com', 2),
-('staff1', 'hashed_password_4', 'staff1@example.com', 3),
-('supplier1', 'hashed_password_5', 'supplier1@example.com', 4),
-('a', 'aaaaaa_hashed', 'a@a.a', 1);
+('customer1', '123456_hashed', 'customer1@example.com', 2),
+('customer2', '123456_hashed', 'customer2@example.com', 2),
+('staff1', '123456_hashed', 'staff1@example.com', 3),
+('supplier1', '123456_hashed', 'supplier1@example.com', 4),
+('admin', '123456_hashed', 'admin@example.com', 1);
 
 GO
 

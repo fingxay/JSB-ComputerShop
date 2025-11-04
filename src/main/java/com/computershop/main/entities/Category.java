@@ -19,7 +19,7 @@ public class Category {
     @Column(name = "description")
     private String description;
     
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)

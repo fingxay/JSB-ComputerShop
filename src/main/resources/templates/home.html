@@ -91,6 +91,11 @@
                             <div class="product-price">
                                 <span class="price" th:text="${#numbers.formatDecimal(product.price,1,'COMMA',0,'POINT')} + ' ₫'">0 ₫</span>
                             </div>
+                            <div class="product-actions">
+                                <a th:href="@{/products/{id}(id=${product.productId})}" class="btn btn-detail">
+                                    Xem chi tiết
+                                </a>
+                            </div>
                         </div>
                     </div>
 
