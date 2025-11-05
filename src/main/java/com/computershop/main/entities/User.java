@@ -24,14 +24,11 @@ public class User {
     @JoinColumn(name = "roleid")
     private Role role;
     
-    // Transient field for password (not persisted)
     @Transient
     private String password;
     
-    // Default constructor
     public User() {}
     
-    // Constructor with parameters
     public User(String username, String passwordHash, String email, Role role) {
         this.username = username;
         this.passwordHash = passwordHash;
@@ -39,55 +36,20 @@ public class User {
         this.role = role;
     }
     
-    // Getters and Setters
-    public Integer getUserId() {
-        return userId;
-    }
-    
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
-    
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-    
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-    
-    public String getEmail() {
-        return email;
-    }
-    
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public Role getRole() {
-        return role;
-    }
-    
-    public void setRole(Role role) {
-        this.role = role;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
+    public Integer getUserId() {return userId;}
+    public String getUsername() {return username;}
+    public String getPasswordHash() {return passwordHash;}
+    public String getEmail() {return email;}
+    public Role getRole() {return role;}
+    public String getPassword() {return password;}
+
+    public void setUserId(Integer userId) {this.userId = userId;}
+    public void setUsername(String username) {this.username = username;}
+    public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
+    public void setEmail(String email) {this.email = email;}
+    public void setRole(Role role) {this.role = role;}
+    public void setPassword(String password) {this.password = password;}
+
     @Override
     public String toString() {
         return "User{" +

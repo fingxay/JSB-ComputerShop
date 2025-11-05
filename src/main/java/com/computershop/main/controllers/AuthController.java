@@ -51,7 +51,6 @@ public class AuthController {
                               Model model,
                               RedirectAttributes redirectAttributes) {
         
-        // Validation
         if (user.getUsername() == null || user.getUsername().trim().isEmpty()) {
             model.addAttribute("error", "Tên đăng nhập không được để trống.");
             return "register";
@@ -78,32 +77,29 @@ public class AuthController {
         }
 
         try {
-            // Check if username already exists
+            
             if (userService.findByUsername(user.getUsername()).isPresent()) {
                 model.addAttribute("error", "Tên đăng nhập đã tồn tại.");
                 return "register";
             }
             
-            // Check if email already exists
             if (userService.findByEmail(user.getEmail()).isPresent()) {
                 model.addAttribute("error", "Email đã được sử dụng.");
                 return "register";
             }
             
-            // Set default role (USER)
             Optional<Role> userRole = roleService.findByRoleName("USER");
             if (userRole.isPresent()) {
                 user.setRole(userRole.get());
             } else {
-                // Create USER role if not exists
+                
                 Role newUserRole = new Role();
-                newUserRole.setRoleId(2); // Assuming 1=ADMIN, 2=USER
+                newUserRole.setRoleId(2); 
                 newUserRole.setRoleName("USER");
                 roleService.createRole(newUserRole);
                 user.setRole(newUserRole);
             }
             
-            // Register user
             userService.registerUser(user);
             
             redirectAttributes.addFlashAttribute("success", 
@@ -124,20 +120,18 @@ public class AuthController {
                            Model model) {
         
         try {
-            // Validate credentials
+            
             Optional<User> userOpt = userService.validateLogin(username, password);
             
             if (userOpt.isPresent()) {
                 User user = userOpt.get();
                 
-                // Create session
                 HttpSession session = request.getSession();
                 session.setAttribute("currentUser", user);
                 session.setAttribute("userId", user.getUserId());
                 session.setAttribute("username", user.getUsername());
                 session.setAttribute("role", user.getRole().getRoleName());
                 
-                // Redirect based on role
                 String roleName = user.getRole().getRoleName();
                 if ("admin".equals(roleName)) {
                     return "redirect:/admin/dashboard";
@@ -167,6 +161,6 @@ public class AuthController {
 
     @GetMapping("/forgot-password")
     public String forgotPasswordPage() {
-        return "forgot-password"; // Will need to create this template
+        return "forgot-password"; 
     }
 }

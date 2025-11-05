@@ -282,11 +282,11 @@
     </style>
 </head>
 <body>
-    <!-- Include header fragment -->
+    
     <div th:replace="~{header :: header}"></div>
 
     <main class="product-detail-container">
-        <!-- Breadcrumb -->
+        
         <div class="breadcrumb">
             <a href="/">Trang chủ</a>
             <span>›</span>
@@ -295,9 +295,9 @@
             <span th:text="${product.productName}">Product Name</span>
         </div>
 
-        <!-- Product Detail Content -->
+        
         <div class="product-detail-content">
-            <!-- Product Image Section -->
+            
             <div class="product-image-section">
                 <img class="product-main-image" 
                      th:src="${product.image != null ? product.image.imageUrl : '/Images/placeholder.svg'}" 
@@ -305,7 +305,7 @@
                      onerror="this.src='/Images/placeholder.svg'" />
             </div>
 
-            <!-- Product Info Section -->
+            
             <div class="product-info-section">
                 <h1 th:text="${product.productName}">Product Name</h1>
                 
@@ -313,13 +313,13 @@
                     <span th:text="${product.category.categoryName}">Category</span>
                 </div>
 
-                <!-- Price Section -->
+                
                 <div class="product-price-section">
                     <div class="price-label">Giá bán</div>
                     <div class="price" th:text="${#numbers.formatDecimal(product.price,1,'COMMA',0,'POINT')} + ' ₫'">0 ₫</div>
                 </div>
 
-                <!-- Stock Info -->
+                
                 <div class="product-stock-info" 
                      th:classappend="${product.stockQuantity > 5 ? 'stock-available' : (product.stockQuantity > 0 ? 'stock-low' : 'stock-out')}">
                     <span th:if="${product.stockQuantity > 5}">
@@ -333,7 +333,7 @@
                     </span>
                 </div>
 
-                <!-- Quantity Selector -->
+                
                 <div class="quantity-selector" th:if="${product.stockQuantity > 0}">
                     <label>Số lượng:</label>
                     <div class="quantity-controls">
@@ -345,7 +345,7 @@
                     </div>
                 </div>
 
-                <!-- Product Description -->
+                
                 <div class="product-description">
                     <h3>Mô tả sản phẩm</h3>
                     <p th:text="${product.description != null and !#strings.isEmpty(product.description) ? product.description : 'Chưa có mô tả chi tiết cho sản phẩm này.'}">
@@ -353,7 +353,7 @@
                     </p>
                 </div>
 
-                <!-- Product Meta Information -->
+                
                 <div class="product-meta">
                     <div class="product-meta-item">
                         <span class="product-meta-label">Mã sản phẩm:</span>
@@ -369,7 +369,7 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
+                
                 <div class="product-actions">
                     <button type="button" 
                             class="btn btn-primary" 
@@ -385,7 +385,7 @@
         </div>
     </main>
 
-    <!-- Include footer fragment -->
+    
     <div th:replace="~{footer :: footer}"></div>
 
     <script th:src="@{/JavaScript/main.js}"></script>

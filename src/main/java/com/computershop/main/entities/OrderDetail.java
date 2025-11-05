@@ -26,10 +26,8 @@ public class OrderDetail {
     @Column(name = "price", nullable = false, precision = 18, scale = 2)
     private BigDecimal price;
     
-    // Default constructor
     public OrderDetail() {}
     
-    // Constructor with parameters
     public OrderDetail(Order order, Product product, Integer quantity, BigDecimal price) {
         this.order = order;
         this.product = product;
@@ -37,47 +35,18 @@ public class OrderDetail {
         this.price = price;
     }
     
-    // Getters and Setters
-    public Integer getOrderDetailId() {
-        return orderDetailId;
-    }
-    
-    public void setOrderDetailId(Integer orderDetailId) {
-        this.orderDetailId = orderDetailId;
-    }
-    
-    public Order getOrder() {
-        return order;
-    }
-    
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-    
-    public Product getProduct() {
-        return product;
-    }
-    
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-    
-    public Integer getQuantity() {
-        return quantity;
-    }
-    
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-    
-    public BigDecimal getPrice() {
-        return price;
-    }
-    
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-    
+    public Integer getOrderDetailId() {return orderDetailId;}
+    public Order getOrder() {return order;}
+    public Product getProduct() {return product;}
+    public Integer getQuantity() {return quantity;}
+    public BigDecimal getPrice() {return price;}
+
+    public void setOrderDetailId(Integer orderDetailId) {this.orderDetailId = orderDetailId;}
+    public void setOrder(Order order) {this.order = order;}
+    public void setProduct(Product product) {this.product = product;}
+    public void setQuantity(Integer quantity) {this.quantity = quantity;}
+    public void setPrice(BigDecimal price) {this.price = price;}
+
     @Override
     public String toString() {
         return "OrderDetail{" +

@@ -1,4 +1,4 @@
-/* Authentication pages (login/register) styles */
+
 
 .auth-wrapper {
     max-width: 420px;
@@ -58,7 +58,7 @@
     align-items: center;
 }
 
-/* Additional styles for register page */
+
 .success {
     color: #198754;
     background: #f0fff4;

@@ -1,9 +1,6 @@
-/* =====================================================
-   MODERN ADMIN PANEL DESIGN - LIGHT THEME
-   Computer Shop Admin Panel
-   ===================================================== */
 
-/* Reset và Base Styles */
+
+
 * {
     margin: 0;
     padding: 0;
@@ -18,9 +15,7 @@ body {
     overflow-x: hidden;
 }
 
-/* =====================================================
-   ADMIN CONTAINER LAYOUT
-   ===================================================== */
+
 
 .admin-container {
     display: flex;
@@ -28,9 +23,7 @@ body {
     position: relative;
 }
 
-/* =====================================================
-   SIDEBAR NAVIGATION
-   ===================================================== */
+
 
 .admin-sidebar {
     width: 280px;
@@ -79,7 +72,7 @@ body {
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
-/* Navigation Menu */
+
 .admin-nav {
     list-style: none;
     padding: 1.5rem 0;
@@ -142,9 +135,7 @@ body {
     font-size: 1.1rem;
 }
 
-/* =====================================================
-   MAIN CONTENT AREA
-   ===================================================== */
+
 
 .admin-main {
     flex: 1;
@@ -154,7 +145,7 @@ body {
     transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Header Section */
+
 .admin-header {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
     padding: 2.5rem 2rem;
@@ -224,9 +215,7 @@ body {
     border: 1px solid rgba(124, 58, 237, 0.2);
 }
 
-/* =====================================================
-   ALERT MESSAGES
-   ===================================================== */
+
 
 .admin-alert {
     padding: 1.25rem 1.75rem;
@@ -260,9 +249,7 @@ body {
     flex-shrink: 0;
 }
 
-/* =====================================================
-   TABLE STYLES
-   ===================================================== */
+
 
 .admin-table-container {
     background: #ffffff;
@@ -347,9 +334,7 @@ body {
     font-weight: 600;
 }
 
-/* =====================================================
-   STATISTICS CARDS
-   ===================================================== */
+
 
 .admin-stats-grid {
     display: grid;
@@ -456,9 +441,7 @@ body {
     font-size: 0.8rem;
 }
 
-/* =====================================================
-   FORM CONTAINERS
-   ===================================================== */
+
 
 .dashboard-content-grid {
     display: grid;
@@ -506,9 +489,7 @@ body {
     color: #3b82f6;
 }
 
-/* =====================================================
-   ACTIVITY & NOTIFICATIONS
-   ===================================================== */
+
 
 .activity-list {
     padding: 2rem 2.5rem;
@@ -582,9 +563,7 @@ body {
     display: block;
 }
 
-/* =====================================================
-   STOCK ALERTS
-   ===================================================== */
+
 
 .stock-alert-list {
     padding: 2rem 2.5rem;
@@ -633,9 +612,7 @@ body {
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-/* =====================================================
-   BUTTONS & INTERACTIVE ELEMENTS
-   ===================================================== */
+
 
 .admin-btn {
     display: inline-flex;
@@ -722,7 +699,7 @@ body {
     min-height: 120px;
 }
 
-/* Quick Actions */
+
 .admin-quick-actions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -730,9 +707,7 @@ body {
     margin: 2rem;
 }
 
-/* =====================================================
-   BADGES & STATUS INDICATORS
-   ===================================================== */
+
 
 .admin-badge {
     display: inline-flex;
@@ -782,9 +757,7 @@ body {
     border: 1px solid rgba(14, 165, 233, 0.3);
 }
 
-/* =====================================================
-   ANIMATIONS
-   ===================================================== */
+
 
 @keyframes slideInDown {
     from {
@@ -812,9 +785,7 @@ body {
     50% { opacity: 0.5; }
 }
 
-/* =====================================================
-   RESPONSIVE DESIGN
-   ===================================================== */
+
 
 @media (max-width: 1024px) {
     .admin-stats-grid {
@@ -895,9 +866,7 @@ body {
     }
 }
 
-/* =====================================================
-   UTILITY CLASSES
-   ===================================================== */
+
 
 .text-center { text-align: center; }
 .text-right { text-align: right; }
@@ -920,7 +889,7 @@ body {
     pointer-events: none;
 }
 
-/* Mobile Menu Toggle */
+
 .mobile-menu-toggle {
     display: none;
     position: fixed;
@@ -942,9 +911,7 @@ body {
     }
 }
 
-/* =====================================================
-   SCROLLBAR CUSTOMIZATION
-   ===================================================== */
+
 
 ::-webkit-scrollbar {
     width: 8px;

@@ -10,11 +10,11 @@
     <link rel="stylesheet" th:href="@{/CSS/home.css}" />
 </head>
 <body>
-    <!-- Include header fragment -->
+    
     <div th:replace="header :: header"></div>
 
     <main class="main-content">
-        <!-- Two large banners -->
+        
         <section class="hero-banners">
             <div class="container">
                 <div class="banners-grid">
@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="products-grid">
-                    <!-- Thymeleaf: iterate over products provided by controller -->
+                    
                     <div class="product-card" th:each="product : ${products}">
                         <div class="product-image">
                             <img th:src="${product.image != null ? product.image.imageUrl : '/Images/placeholder.svg'}" 
@@ -99,7 +99,7 @@
                         </div>
                     </div>
 
-                    <!-- Message when no products available -->
+                    
                     <div th:if="${products == null or #lists.isEmpty(products)}" class="no-products-message">
                         <p>Đang cập nhật sản phẩm mới...</p>
                         <a href="/products" class="btn btn-primary">Xem tất cả sản phẩm</a>
@@ -109,7 +109,7 @@
         </div>
     </main>
 
-    <!-- Include footer fragment -->
+    
     <div th:replace="footer :: footer"></div>
 
     <script th:src="@{/JavaScript/header.js}"></script>

@@ -35,9 +35,6 @@ public class OrderController {
     @Autowired
     private OrderDetailService orderDetailService;
 
-    /**
-     * Cart item class for session storage
-     */
     public static class CartItem {
         private Integer productId;
         private String productName;
@@ -55,7 +52,6 @@ public class OrderController {
             this.imageUrl = imageUrl;
         }
         
-        // Getters and setters
         public Integer getProductId() { return productId; }
         public void setProductId(Integer productId) { this.productId = productId; }
         
@@ -76,9 +72,6 @@ public class OrderController {
         }
     }
 
-    /**
-     * Get cart from session
-     */
     @SuppressWarnings("unchecked")
     private List<CartItem> getCartFromSession(HttpSession session) {
         Object cart = session.getAttribute("cart");
@@ -88,9 +81,6 @@ public class OrderController {
         return new ArrayList<>();
     }
 
-    /**
-     * Save cart to session
-     */
     private void saveCartToSession(HttpSession session, List<CartItem> cart) {
         session.setAttribute("cart", cart);
     }
@@ -107,7 +97,7 @@ public class OrderController {
         model.addAttribute("cartTotal", total);
         model.addAttribute("cartSize", cartItems.size());
         
-        return "cart/view"; // Will need to create this template
+        return "cart/view"; 
     }
 
     @PostMapping("/add")
@@ -118,14 +108,13 @@ public class OrderController {
         Map<String, Object> response = new HashMap<>();
         
         try {
-            // Validate quantity
+            
             if (quantity <= 0) {
                 response.put("success", false);
                 response.put("message", "Số lượng phải lớn hơn 0");
                 return response;
             }
             
-            // Get product
             Optional<Product> productOpt = productService.getProductById(productId);
             if (productOpt.isEmpty()) {
                 response.put("success", false);
@@ -135,17 +124,14 @@ public class OrderController {
             
             Product product = productOpt.get();
             
-            // Check stock
             if (product.getStockQuantity() < quantity) {
                 response.put("success", false);
                 response.put("message", "Không đủ hàng trong kho. Còn lại: " + product.getStockQuantity());
                 return response;
             }
             
-            // Get cart from session
             List<CartItem> cart = getCartFromSession(session);
             
-            // Check if product already in cart
             boolean found = false;
             for (CartItem item : cart) {
                 if (item.getProductId().equals(productId)) {
@@ -161,7 +147,6 @@ public class OrderController {
                 }
             }
             
-            // Add new item if not found
             if (!found) {
                 String imageUrl = product.getImage() != null ? product.getImage().getImageUrl() : "/Images/placeholder.jpg";
                 CartItem newItem = new CartItem(productId, product.getProductName(), 
@@ -169,10 +154,8 @@ public class OrderController {
                 cart.add(newItem);
             }
             
-            // Save cart to session
             saveCartToSession(session, cart);
             
-            // Calculate new cart size
             int cartSize = cart.stream().mapToInt(CartItem::getQuantity).sum();
             
             response.put("success", true);
@@ -198,10 +181,10 @@ public class OrderController {
             List<CartItem> cart = getCartFromSession(session);
             
             if (quantity <= 0) {
-                // Remove item
+                
                 cart.removeIf(item -> item.getProductId().equals(productId));
             } else {
-                // Update quantity
+                
                 Optional<Product> productOpt = productService.getProductById(productId);
                 if (productOpt.isEmpty()) {
                     response.put("success", false);
@@ -290,7 +273,7 @@ public class OrderController {
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("cartTotal", total);
         
-        return "cart/checkout"; // Will need to create this template
+        return "cart/checkout"; 
     }
 
     @PostMapping("/checkout")
@@ -311,7 +294,6 @@ public class OrderController {
                 return "redirect:/cart";
             }
             
-            // Get user
             Optional<User> userOpt = userService.getUserById(userId);
             if (userOpt.isEmpty()) {
                 redirectAttributes.addFlashAttribute("error", "Không tìm thấy người dùng");
@@ -320,28 +302,23 @@ public class OrderController {
             
             User user = userOpt.get();
             
-            // Create order
             Order order = new Order();
             order.setUser(user);
             order.setOrderDate(LocalDateTime.now());
             
-            // Save order first
             Order savedOrder = orderService.createOrder(order);
             
-            // Create order details
             for (CartItem cartItem : cartItems) {
                 Optional<Product> productOpt = productService.getProductById(cartItem.getProductId());
                 if (productOpt.isPresent()) {
                     Product product = productOpt.get();
                     
-                    // Check stock again
                     if (product.getStockQuantity() < cartItem.getQuantity()) {
                         redirectAttributes.addFlashAttribute("error", 
                             "Sản phẩm " + product.getProductName() + " không đủ hàng");
                         return "redirect:/cart";
                     }
                     
-                    // Create order detail
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.setOrder(savedOrder);
                     orderDetail.setProduct(product);
@@ -350,13 +327,11 @@ public class OrderController {
                     
                     orderDetailService.createOrderDetail(orderDetail);
                     
-                    // Update product stock
                     productService.updateStock(product.getProductId(), 
                         product.getStockQuantity() - cartItem.getQuantity());
                 }
             }
             
-            // Clear cart
             session.removeAttribute("cart");
             
             redirectAttributes.addFlashAttribute("success", 

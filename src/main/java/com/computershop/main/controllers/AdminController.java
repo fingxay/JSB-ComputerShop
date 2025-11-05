@@ -35,9 +35,6 @@ public class AdminController {
     @Autowired
     private OrderService orderService;
 
-    /**
-     * Check if user is admin - used by all admin methods
-     */
     private boolean isAdmin(HttpSession session) {
         String role = (String) session.getAttribute("role");
         return "admin".equals(role);
@@ -50,19 +47,18 @@ public class AdminController {
         }
         
         try {
-            // Dashboard statistics
+            
             model.addAttribute("totalUsers", userService.getTotalUsers());
             model.addAttribute("totalProducts", productService.getTotalProducts());
             model.addAttribute("totalCategories", categoryService.getAllCategories().size());
             model.addAttribute("totalOrders", orderService.getTotalOrders());
             model.addAttribute("totalRevenue", orderService.getTotalRevenue());
             
-            // Recent activities
             model.addAttribute("recentOrders", orderService.getRecentOrders(10));
             model.addAttribute("lowStockProducts", productService.getLowStockProducts(10));
             model.addAttribute("recentUsers", userService.getRecentUsers(5));
             
-            return "admin/dashboard"; // Will need to create this template
+            return "admin/dashboard"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
@@ -70,8 +66,6 @@ public class AdminController {
         }
     }
 
-    // === USER MANAGEMENT ===
-    
     @GetMapping("/users")
     public String manageUsers(HttpSession session, Model model) {
         if (!isAdmin(session)) {
@@ -81,7 +75,7 @@ public class AdminController {
         try {
             List<User> users = userService.getAllUsers();
             model.addAttribute("users", users);
-            return "admin/users"; // Will need to create this template
+            return "admin/users"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
@@ -109,8 +103,6 @@ public class AdminController {
         return "redirect:/admin/users";
     }
 
-    // === CATEGORY MANAGEMENT ===
-    
     @GetMapping("/categories")
     public String manageCategories(HttpSession session, Model model) {
         if (!isAdmin(session)) {
@@ -121,7 +113,7 @@ public class AdminController {
             List<Category> categories = categoryService.getAllCategoriesOrderedByName();
             model.addAttribute("categories", categories);
             model.addAttribute("newCategory", new Category());
-            return "admin/categories"; // Will need to create this template
+            return "admin/categories"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
@@ -188,8 +180,6 @@ public class AdminController {
         return "redirect:/admin/categories";
     }
 
-    // === PRODUCT MANAGEMENT ===
-    
     @GetMapping("/products")
     public String manageProducts(HttpSession session, Model model) {
         if (!isAdmin(session)) {
@@ -245,7 +235,7 @@ public class AdminController {
         }
         
         try {
-            // Validate required fields
+            
             if (product.getProductName() == null || product.getProductName().trim().isEmpty()) {
                 redirectAttributes.addFlashAttribute("error", "Tên sản phẩm không được để trống");
                 return "redirect:/admin/products";
@@ -256,7 +246,6 @@ public class AdminController {
                 return "redirect:/admin/products";
             }
             
-            // Set category
             Optional<Category> categoryOpt = categoryService.getCategoryById(categoryId);
             if (categoryOpt.isPresent()) {
                 product.setCategory(categoryOpt.get());
@@ -291,7 +280,7 @@ public class AdminController {
             model.addAttribute("product", productOpt.get());
             model.addAttribute("categories", categories);
             
-            return "admin/edit-product"; // Will need to create this template
+            return "admin/edit-product"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
@@ -310,7 +299,7 @@ public class AdminController {
         }
         
         try {
-            // Set category
+            
             Optional<Category> categoryOpt = categoryService.getCategoryById(categoryId);
             if (categoryOpt.isPresent()) {
                 product.setCategory(categoryOpt.get());
@@ -345,8 +334,6 @@ public class AdminController {
         return "redirect:/admin/products";
     }
 
-    // === ORDER MANAGEMENT ===
-    
     @GetMapping("/orders")
     public String manageOrders(HttpSession session, Model model) {
         if (!isAdmin(session)) {
@@ -356,7 +343,7 @@ public class AdminController {
         try {
             List<Order> orders = orderService.getAllOrders();
             model.addAttribute("orders", orders);
-            return "admin/orders"; // Will need to create this template
+            return "admin/orders"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
@@ -377,7 +364,7 @@ public class AdminController {
             Optional<Order> orderOpt = orderService.getOrderById(orderId);
             if (orderOpt.isPresent()) {
                 model.addAttribute("order", orderOpt.get());
-                return "admin/order-detail"; // Will need to create this template
+                return "admin/order-detail"; 
             } else {
                 return "redirect:/admin/orders";
             }

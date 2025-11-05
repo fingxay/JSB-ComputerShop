@@ -1,6 +1,6 @@
-/* Home page specific styles */
 
-/* Banner styles */
+
+
 .hero-banners { 
     margin: 20px 0; 
 }
@@ -154,7 +154,7 @@
     color: var(--brand); 
 }
 
-/* Product Actions */
+
 .product-actions {
     margin-top: 12px;
     padding-top: 12px;
@@ -182,7 +182,7 @@
     background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
-/* Mobile responsive */
+
 @media (max-width: 768px) { 
     .banners-grid { 
         grid-template-columns: 1fr; 
@@ -197,7 +197,7 @@
     } 
 }
 
-/* No products message */
+
 .no-products-message {
     grid-column: 1 / -1;
     text-align: center;

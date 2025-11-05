@@ -1,8 +1,6 @@
-/* =====================================================
-   ADMIN ORDER MANAGEMENT STYLES
-   ===================================================== */
 
-/* Order Table Enhanced Styles */
+
+
 .admin-table-container {
     background: #ffffff;
     border-radius: 16px;
@@ -46,7 +44,7 @@
     font-size: 1rem;
 }
 
-/* Customer Info in Table */
+
 .customer-info {
     display: flex;
     flex-direction: column;
@@ -63,7 +61,7 @@
     font-size: 0.8rem;
 }
 
-/* Money Display */
+
 .money-display {
     font-family: 'JetBrains Mono', 'Courier New', monospace;
     font-weight: 700;
@@ -71,7 +69,7 @@
     font-size: 1rem;
 }
 
-/* Dropdown Menu Styles */
+
 .admin-dropdown {
     position: relative;
     display: inline-block;
@@ -146,7 +144,7 @@
     text-align: center;
 }
 
-/* Order Detail Specific Styles */
+
 .admin-order-container {
     margin: 2rem;
 }
@@ -187,7 +185,7 @@
     flex-shrink: 0;
 }
 
-/* Order Grid */
+
 .admin-order-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -220,7 +218,7 @@
     font-size: 1.2rem;
 }
 
-/* Info List */
+
 .admin-info-list {
     display: flex;
     flex-direction: column;
@@ -251,7 +249,7 @@
     text-align: right;
 }
 
-/* Product Info in Order Details */
+
 .product-info {
     display: flex;
     flex-direction: column;
@@ -268,7 +266,7 @@
     font-size: 0.8rem;
 }
 
-/* Table Footer */
+
 .admin-table-total {
     background: linear-gradient(135deg, #f8fafc, #f1f5f9);
     font-weight: 700;
@@ -280,12 +278,12 @@
     border-top: 2px solid #e2e8f0;
 }
 
-/* Order Stats */
+
 .admin-order-stats {
     margin-top: 2rem;
 }
 
-/* Revenue Summary */
+
 .admin-revenue-summary {
     margin-top: 2rem;
 }
@@ -298,7 +296,7 @@
     margin: 2rem;
 }
 
-/* Text Utilities */
+
 .text-success {
     color: #059669;
 }
@@ -315,7 +313,7 @@
     color: #64748b;
 }
 
-/* Responsive */
+
 @media (max-width: 1024px) {
     .admin-order-grid {
         grid-template-columns: 1fr;

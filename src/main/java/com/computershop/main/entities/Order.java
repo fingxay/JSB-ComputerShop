@@ -24,59 +24,27 @@ public class Order {
     private List<OrderDetail> orderDetails;
     
     @Column(name = "status")
-    private String status = "pending"; // Default status
+    private String status = "pending"; 
     
-    // Default constructor
     public Order() {}
     
-    // Constructor with parameters
     public Order(User user, LocalDateTime orderDate) {
         this.user = user;
         this.orderDate = orderDate;
     }
     
-    // Getters and Setters
-    public Integer getOrderId() {
-        return orderId;
-    }
+    public Integer getOrderId() {return orderId;}
+    public User getUser() {return user;}
+    public LocalDateTime getOrderDate() {return orderDate;}
+    public List<OrderDetail> getOrderDetails() {return orderDetails;}
+    public String getStatus() {return status;}
+
+    public void setOrderId(Integer orderId) {this.orderId = orderId;}
+    public void setUser(User user) {this.user = user;}
+    public void setOrderDate(LocalDateTime orderDate) {this.orderDate = orderDate;}
+    public void setOrderDetails(List<OrderDetail> orderDetails) {this.orderDetails = orderDetails;}
+    public void setStatus(String status) {this.status = status;}
     
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-    
-    public User getUser() {
-        return user;
-    }
-    
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-    
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-    
-    public List<OrderDetail> getOrderDetails() {
-        return orderDetails;
-    }
-    
-    public void setOrderDetails(List<OrderDetail> orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-    
-    public String getStatus() {
-        return status;
-    }
-    
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    
-    // Helper method to calculate total amount
     public double getTotalAmount() {
         if (orderDetails == null || orderDetails.isEmpty()) {
             return 0.0;

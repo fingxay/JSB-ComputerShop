@@ -14,31 +14,18 @@ public class Image {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
     
-    // Default constructor
     public Image() {}
     
-    // Constructor with parameters
     public Image(String imageUrl) {
         this.imageUrl = imageUrl;
     }
     
-    // Getters and Setters
-    public Integer getImageId() {
-        return imageId;
-    }
-    
-    public void setImageId(Integer imageId) {
-        this.imageId = imageId;
-    }
-    
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    
+    public Integer getImageId() {return imageId;}
+    public String getImageUrl() {return imageUrl;}
+
+    public void setImageId(Integer imageId) {this.imageId = imageId;}
+    public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
+
     @Override
     public String toString() {
         return "Image{" +

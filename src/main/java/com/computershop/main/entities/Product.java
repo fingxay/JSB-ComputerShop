@@ -36,10 +36,8 @@ public class Product {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
-    // Default constructor
     public Product() {}
     
-    // Constructor with parameters
     public Product(String productName, String description, BigDecimal price, Integer stockQuantity, Category category, Image image) {
         this.productName = productName;
         this.description = description;
@@ -50,70 +48,23 @@ public class Product {
         this.createdAt = LocalDateTime.now();
     }
     
-    // Getters and Setters
-    public Integer getProductId() {
-        return productId;
-    }
-    
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-    
-    public String getProductName() {
-        return productName;
-    }
-    
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public BigDecimal getPrice() {
-        return price;
-    }
-    
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-    
-    public Integer getStockQuantity() {
-        return stockQuantity;
-    }
-    
-    public void setStockQuantity(Integer stockQuantity) {
-        this.stockQuantity = stockQuantity;
-    }
-    
-    public Category getCategory() {
-        return category;
-    }
-    
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-    
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public Image getImage() {
-        return image;
-    }
-    
-    public void setImage(Image image) {
-        this.image = image;
-    }
+    public Integer getProductId() {return productId;}
+    public String getProductName() {return productName;}
+    public String getDescription() {return description;}
+    public BigDecimal getPrice() {return price;}
+    public Integer getStockQuantity() {return stockQuantity;}
+    public Category getCategory() {return category;}
+    public LocalDateTime getCreatedAt() {return createdAt;}
+    public Image getImage() {return image;} 
+
+    public void setProductId(Integer productId) {this.productId = productId;}
+    public void setProductName(String productName) {this.productName = productName;}
+    public void setDescription(String description) {this.description = description;}
+    public void setPrice(BigDecimal price) {this.price = price;}
+    public void setStockQuantity(Integer stockQuantity) {this.stockQuantity = stockQuantity;}
+    public void setCategory(Category category) {this.category = category;}
+    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
+    public void setImage(Image image) {this.image = image;}
     
     @Override
     public String toString() {

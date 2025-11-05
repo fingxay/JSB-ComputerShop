@@ -1,4 +1,4 @@
-/* Products page specific styles */
+
 
 .page-header {
     text-align: center;
@@ -32,7 +32,7 @@
     font-weight: 500;
 }
 
-/* Price range inputs */
+
 .filter-group:has(.price-input) {
     flex-direction: row;
     align-items: center;
@@ -98,7 +98,7 @@
     font-weight: 600;
 }
 
-/* Products grid styles */
+
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -107,7 +107,7 @@
     padding: 0;
 }
 
-/* Product Card Styles */
+
 .product-card {
     background: white;
     border-radius: 12px;
@@ -202,7 +202,7 @@
     font-size: 0.9rem;
 }
 
-/* Product Actions */
+
 .product-actions {
     margin-top: 12px;
     padding-top: 12px;
@@ -230,7 +230,7 @@
     background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
-/* Empty state styles */
+
 .empty-state {
     grid-column: 1 / -1;
     text-align: center;
@@ -250,7 +250,7 @@
     color: #888;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -314,7 +314,7 @@
     }
 }
 
-/* Enhanced Total and Summary Styles */
+
 .products-header .text-muted {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: 15px 20px;
@@ -333,7 +333,7 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Products Count Display */
+
 .products-count {
     display: inline-flex;
     align-items: center;
@@ -352,7 +352,7 @@
     margin-right: 6px;
 }
 
-/* Search Results Highlight */
+
 .search-highlight {
     background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
     color: white;
@@ -362,7 +362,7 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Category Filter Highlight */
+
 .category-highlight {
     background: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%);
     color: white;
@@ -372,7 +372,7 @@
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Enhanced Price Display */
+
 .product-price .price {
     background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
     color: white;
@@ -385,7 +385,7 @@
     font-family: 'Courier New', monospace;
 }
 
-/* Total Summary Card */
+
 .total-summary-card {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;

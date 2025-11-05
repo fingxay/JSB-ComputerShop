@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <!-- Sidebar -->
+        
         <nav class="admin-sidebar">
             <div class="admin-logo">
                 <h2><i class="fas fa-laptop"></i> Admin Panel</h2>
@@ -25,7 +25,7 @@
             </ul>
         </nav>
 
-        <!-- Main Content -->
+        
         <main class="admin-main">
             <div class="admin-header">
                 <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <!-- Flash Messages -->
+            
             <div th:if="${success}" class="admin-alert admin-alert-success">
                 <i class="fas fa-check-circle"></i>
                 <span th:text="${success}"></span>
@@ -46,7 +46,7 @@
                 <span th:text="${error}"></span>
             </div>
 
-            <!-- Statistics Cards -->
+            
             <div class="admin-stats-grid">
                 <div class="admin-stat-card">
                     <div class="admin-stat-icon admin-stat-primary">
@@ -105,9 +105,9 @@
                 </div>
             </div>
 
-            <!-- Dashboard Content Grid -->
+            
             <div class="dashboard-content-grid">
-                <!-- Recent Activities Section -->
+                
                 <div class="admin-form-container">
                     <div class="admin-form-header">
                         <h2><i class="fas fa-clock"></i> Hoạt động Gần Đây</h2>
@@ -135,7 +135,7 @@
                     </div>
                 </div>
 
-                <!-- Low Stock Alert Section -->
+                
                 <div class="admin-form-container">
                     <div class="admin-form-header">
                         <h2><i class="fas fa-exclamation-triangle"></i> Cảnh Báo Tồn Kho</h2>
@@ -168,7 +168,7 @@
                 </div>
             </div>
 
-            <!-- Quick Actions Section -->
+            
             <div class="admin-form-container">
                 <div class="admin-form-header">
                     <h2><i class="fas fa-bolt"></i> Thao Tác Nhanh</h2>
@@ -209,7 +209,7 @@
                 </div>
             </div>
 
-            <!-- System Status Section -->
+            
             <div class="admin-form-container">
                 <div class="admin-form-header">
                     <h2><i class="fas fa-server"></i> Trạng Thái Hệ Thống</h2>

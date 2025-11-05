@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <!-- Sidebar -->
+        
         <nav class="admin-sidebar">
             <div class="admin-logo">
                 <h2><i class="fas fa-laptop"></i> Admin Panel</h2>
@@ -25,7 +25,7 @@
             </ul>
         </nav>
 
-        <!-- Main Content -->
+        
         <main class="admin-main">
             <div class="admin-header">
                 <h1><i class="fas fa-plus-circle"></i> Thêm Sản Phẩm Mới</h1>
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <!-- Flash Messages -->
+            
             <div th:if="${success}" class="admin-alert admin-alert-success">
                 <i class="fas fa-check-circle"></i>
                 <span th:text="${success}"></span>
@@ -44,7 +44,7 @@
                 <span th:text="${error}"></span>
             </div>
 
-            <!-- Add Product Form -->
+            
             <div class="admin-form-container">
                 <div class="admin-form-header">
                     <h2><i class="fas fa-box"></i> Thông Tin Sản Phẩm</h2>
@@ -62,7 +62,7 @@
                       class="admin-form"
                       id="addProductForm">
                     
-                    <!-- Basic Information Section -->
+                    
                     <div class="form-section">
                         <h3><i class="fas fa-info-circle"></i> Thông Tin Cơ Bản</h3>
                         <div class="admin-form-row">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
 
-                    <!-- Pricing Section -->
+                    
                     <div class="form-section">
                         <h3><i class="fas fa-dollar-sign"></i> Thông Tin Giá Cả</h3>
                         <div class="admin-form-row">
@@ -123,7 +123,7 @@
                         </div>
                     </div>
 
-                    <!-- Product Details Section -->
+                    
                     <div class="form-section">
                         <h3><i class="fas fa-align-left"></i> Mô Tả Chi Tiết</h3>
                         <div class="admin-form-group">
@@ -140,7 +140,7 @@
                         </div>
                     </div>
 
-                    <!-- Product Preview Section -->
+                    
                     <div class="form-section">
                         <h3><i class="fas fa-eye"></i> Xem Trước Sản Phẩm</h3>
                         <div class="product-preview" id="productPreview">
@@ -156,7 +156,7 @@
                         </div>
                     </div>
 
-                    <!-- Form Actions -->
+                    
                     <div class="admin-form-actions">
                         <button type="submit" class="admin-btn admin-btn-success" id="submitBtn" disabled>
                             <i class="fas fa-plus"></i> Thêm Sản Phẩm

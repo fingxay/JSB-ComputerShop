@@ -1,13 +1,10 @@
 package com.computershop.main.controllers;
 
 import com.computershop.main.entities.Product;
-// import com.computershop.main.entities.Category;
+
 import com.computershop.main.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.data.domain.Page;
-// import org.springframework.data.domain.PageRequest;
-// import org.springframework.data.domain.Pageable;
-// import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +35,7 @@ public class ProductController {
         try {
             List<Product> products;
             
-            // Step 1: Get base products based on filters
-            String searchQuery = search != null ? search : q; // Handle both 'search' and 'q' params
+            String searchQuery = search != null ? search : q; 
             if (searchQuery != null && !searchQuery.trim().isEmpty()) {
                 products = productService.searchProductsByName(searchQuery.trim());
             } else if (category != null && !category.trim().isEmpty()) {
@@ -48,7 +44,6 @@ public class ProductController {
                 products = productService.getAllProducts();
             }
             
-            // Step 2: Apply price filters on existing results
             if (minPrice != null || maxPrice != null) {
                 BigDecimal min = minPrice != null ? minPrice : BigDecimal.ZERO;
                 BigDecimal max = maxPrice != null ? maxPrice : BigDecimal.valueOf(Double.MAX_VALUE);
@@ -57,7 +52,6 @@ public class ProductController {
                     .toList();
             }
             
-            // Step 3: Apply sorting to filtered results
             switch (sort) {
                 case "price-asc":
                     products = products.stream()
@@ -70,7 +64,7 @@ public class ProductController {
                         .toList();
                     break;
                 case "popular":
-                    // For now, sort by stock quantity desc as a proxy for popularity
+                    
                     products = products.stream()
                         .sorted((p1, p2) -> Integer.compare(p2.getStockQuantity(), p1.getStockQuantity()))
                         .toList();
@@ -87,7 +81,6 @@ public class ProductController {
             model.addAttribute("categories", productService.getAllCategoryNames());
             model.addAttribute("totalProducts", products.size());
             
-            // Filter parameters
             model.addAttribute("selectedCategory", category);
             model.addAttribute("searchQuery", searchQuery);
             model.addAttribute("minPrice", minPrice);
@@ -113,22 +106,20 @@ public class ProductController {
                 Product product = productOpt.get();
                 model.addAttribute("product", product);
                 
-                // Get related products (same category)
                 List<Product> relatedProducts = List.of();
                 if (product.getCategory() != null) {
                     relatedProducts = productService.getProductsByCategory(product.getCategory());
-                    relatedProducts.removeIf(p -> p.getProductId().equals(productId)); // Remove current product
+                    relatedProducts.removeIf(p -> p.getProductId().equals(productId)); 
                     if (relatedProducts.size() > 4) {
-                        relatedProducts = relatedProducts.subList(0, 4); // Limit to 4
+                        relatedProducts = relatedProducts.subList(0, 4); 
                     }
                 }
                 model.addAttribute("relatedProducts", relatedProducts);
                 
-                // Check stock availability
                 model.addAttribute("inStock", product.getStockQuantity() > 0);
                 model.addAttribute("lowStock", product.getStockQuantity() > 0 && product.getStockQuantity() < 10);
                 
-                return "product-detail"; // Will need to create this template
+                return "product-detail"; 
             } else {
                 model.addAttribute("error", "Không tìm thấy sản phẩm");
                 return "redirect:/products";
@@ -169,13 +160,12 @@ public class ProductController {
                            @RequestParam("quantity") Integer quantity,
                            HttpSession session) {
         try {
-            // Check if user is logged in
+            
             Integer userId = (Integer) session.getAttribute("userId");
             if (userId == null) {
                 return "error:Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng";
             }
             
-            // Check product availability
             Optional<Product> productOpt = productService.getProductById(productId);
             if (productOpt.isEmpty()) {
                 return "error:Không tìm thấy sản phẩm";
@@ -186,8 +176,6 @@ public class ProductController {
                 return "error:Không đủ hàng trong kho";
             }
             
-            // Add to cart logic would go here
-            // For now, just return success
             return "success:Đã thêm sản phẩm vào giỏ hàng";
             
         } catch (Exception e) {

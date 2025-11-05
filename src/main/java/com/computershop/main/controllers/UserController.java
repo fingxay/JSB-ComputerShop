@@ -35,7 +35,7 @@ public class UserController {
             Optional<User> userOpt = userService.getUserById(userId);
             if (userOpt.isPresent()) {
                 model.addAttribute("user", userOpt.get());
-                return "user/profile"; // Will need to create this template
+                return "user/profile"; 
             } else {
                 session.invalidate();
                 return "redirect:/login";
@@ -56,7 +56,7 @@ public class UserController {
         }
         
         try {
-            // Get current user
+            
             Optional<User> currentUserOpt = userService.getUserById(userId);
             if (currentUserOpt.isEmpty()) {
                 return "redirect:/login";
@@ -64,13 +64,11 @@ public class UserController {
             
             User currentUser = currentUserOpt.get();
             
-            // Update only allowed fields
             currentUser.setUsername(user.getUsername());
             currentUser.setEmail(user.getEmail());
             
             userService.updateUser(currentUser);
             
-            // Update session
             session.setAttribute("username", currentUser.getUsername());
             
             redirectAttributes.addFlashAttribute("success", "Cập nhật thông tin thành công!");
@@ -92,7 +90,7 @@ public class UserController {
         try {
             List<Order> orders = orderService.getOrdersByUserId(userId);
             model.addAttribute("orders", orders);
-            return "user/orders"; // Will need to create this template
+            return "user/orders"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi khi tải danh sách đơn hàng: " + e.getMessage());
@@ -116,14 +114,13 @@ public class UserController {
             if (orderOpt.isPresent()) {
                 Order order = orderOpt.get();
                 
-                // Check if order belongs to current user
                 if (!order.getUser().getUserId().equals(userId)) {
                     model.addAttribute("error", "Bạn không có quyền xem đơn hàng này");
                     return "redirect:/user/orders";
                 }
                 
                 model.addAttribute("order", order);
-                return "user/order-detail"; // Will need to create this template
+                return "user/order-detail"; 
                 
             } else {
                 model.addAttribute("error", "Không tìm thấy đơn hàng");
@@ -148,7 +145,7 @@ public class UserController {
         }
         
         try {
-            // Validate input
+            
             if (newPassword == null || newPassword.length() < 6) {
                 redirectAttributes.addFlashAttribute("error", "Mật khẩu mới phải có ít nhất 6 ký tự");
                 return "redirect:/user/profile";
@@ -159,7 +156,6 @@ public class UserController {
                 return "redirect:/user/profile";
             }
             
-            // Validate current password
             Optional<User> userOpt = userService.getUserById(userId);
             if (userOpt.isEmpty()) {
                 return "redirect:/login";
@@ -171,7 +167,6 @@ public class UserController {
                 return "redirect:/user/profile";
             }
             
-            // Update password
             userService.changePassword(userId, newPassword);
             
             redirectAttributes.addFlashAttribute("success", "Đổi mật khẩu thành công!");
@@ -191,7 +186,7 @@ public class UserController {
         }
         
         try {
-            // Get user info
+            
             Optional<User> userOpt = userService.getUserById(userId);
             if (userOpt.isEmpty()) {
                 return "redirect:/login";
@@ -199,15 +194,13 @@ public class UserController {
             
             model.addAttribute("user", userOpt.get());
             
-            // Get recent orders
             List<Order> recentOrders = orderService.getRecentOrdersByUserId(userId, 5);
             model.addAttribute("recentOrders", recentOrders);
             
-            // Get order statistics
             model.addAttribute("totalOrders", orderService.countOrdersByUserId(userId));
             model.addAttribute("totalSpent", orderService.getTotalSpentByUserId(userId));
             
-            return "user/dashboard"; // Will need to create this template
+            return "user/dashboard"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());

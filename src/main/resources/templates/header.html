@@ -1,4 +1,4 @@
-<!-- Header fragment with role-based navigation -->
+
 <header class="header" th:fragment="header">
     <div class="container">
         <div class="header-top">
@@ -7,7 +7,7 @@
                 <a href="/" class="brand-name">JSB ComputerShop</a>
             </div>
             
-            <!-- Search bar -->
+            
             <form id="search-form" class="search" th:action="@{/search}" method="get">
                 <input id="q" type="search" name="q" placeholder="Tìm kiếm sản phẩm..." />
                 <button class="btn btn-search" type="submit">
@@ -15,9 +15,9 @@
                 </button>
             </form>
             
-            <!-- Navigation based on user role -->
+            
             <nav class="nav">
-                <!-- Guest navigation -->
+                
                 <div th:if="${session.currentUser == null}" class="nav-guest">
                     <a href="/" class="nav-link">Trang chủ</a>
                     <a href="/products" class="nav-link">Sản phẩm</a>
@@ -30,7 +30,7 @@
                     <a href="/register" class="nav-link">Đăng ký</a>
                 </div>
                 
-                <!-- User navigation -->
+                
                 <div th:if="${session.currentUser != null && session.role != 'admin'}" class="nav-user">
                     <a href="/" class="nav-link">Trang chủ</a>
                     <a href="/products" class="nav-link">Sản phẩm</a>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 
-                <!-- Admin navigation -->
+                
                 <div th:if="${session.currentUser != null && session.role == 'admin'}" class="nav-admin">
                     <a href="/admin/products" class="nav-link">Danh sách sản phẩm</a>
                     <a href="/admin/users" class="nav-link">Danh sách tài khoản</a>

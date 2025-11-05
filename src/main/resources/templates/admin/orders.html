@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="admin-container">
-        <!-- Sidebar -->
+        
         <nav class="admin-sidebar">
             <div class="admin-logo">
                 <h2><i class="fas fa-laptop"></i> Admin Panel</h2>
@@ -25,14 +25,14 @@
             </ul>
         </nav>
 
-        <!-- Main Content -->
+        
         <main class="admin-main">
             <div class="admin-header">
                 <h1><i class="fas fa-shopping-cart"></i> Quản Lý Đơn Hàng</h1>
                 <p>Theo dõi và quản lý tất cả đơn hàng</p>
             </div>
 
-            <!-- Flash Messages -->
+            
             <div th:if="${success}" class="admin-alert admin-alert-success">
                 <i class="fas fa-check-circle"></i>
                 <span th:text="${success}"></span>
@@ -42,7 +42,7 @@
                 <span th:text="${error}"></span>
             </div>
 
-            <!-- Orders Table -->
+            
             <div class="admin-table-container">
                 <div class="admin-table-header">
                     <h2><i class="fas fa-list"></i> Danh Sách Đơn Hàng</h2>
@@ -84,13 +84,13 @@
                             </td>
                             <td>
                                 <div class="admin-actions">
-                                    <!-- View Details -->
+                                    
                                     <a th:href="@{/admin/orders/{id}(id=${order.orderId})}" 
                                        class="admin-btn admin-btn-info admin-btn-sm">
                                         <i class="fas fa-eye"></i> Xem Chi Tiết
                                     </a>
                                     
-                                    <!-- Update Status Dropdown -->
+                                    
                                     <div class="admin-dropdown">
                                         <button class="admin-btn admin-btn-secondary admin-btn-sm dropdown-toggle" 
                                                 type="button" 
@@ -142,7 +142,7 @@
                 </table>
             </div>
 
-            <!-- Order Statistics -->
+            
             <div class="admin-stats-grid">
                 <div class="admin-stat-card">
                     <div class="admin-stat-icon admin-stat-primary">
@@ -182,7 +182,7 @@
                 </div>
             </div>
 
-            <!-- Revenue Summary -->
+            
             <div class="admin-revenue-summary">
                 <div class="admin-form-container">
                     <div class="admin-form-header">

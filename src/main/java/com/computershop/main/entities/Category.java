@@ -25,59 +25,28 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
     
-    // Default constructor
     public Category() {
         this.createdAt = LocalDateTime.now();
     }
     
-    // Constructor with parameters
     public Category(String categoryName, String description) {
         this.categoryName = categoryName;
         this.description = description;
         this.createdAt = LocalDateTime.now();
     }
     
-    // Getters and Setters
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-    
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-    
-    public String getCategoryName() {
-        return categoryName;
-    }
-    
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-    
-    public String getDescription() {
-        return description;
-    }
-    
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public List<Product> getProducts() {
-        return products;
-    }
-    
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-    
+    public Integer getCategoryId() {return categoryId;}
+    public String getCategoryName() {return categoryName;}
+    public String getDescription() {return description;}
+    public LocalDateTime getCreatedAt() {return createdAt;}
+    public List<Product> getProducts() {return products;}
+
+    public void setCategoryId(Integer categoryId) {this.categoryId = categoryId;}
+    public void setCategoryName(String categoryName) {this.categoryName = categoryName;}
+    public void setDescription(String description) {this.description = description;}
+    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
+    public void setProducts(List<Product> products) {this.products = products;}
+
     @Override
     public String toString() {
         return "Category{" +

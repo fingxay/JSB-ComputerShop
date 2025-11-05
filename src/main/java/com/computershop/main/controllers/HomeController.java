@@ -18,16 +18,15 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         try {
-            // Get featured products (limit to 6 for homepage)
+            
             List<Product> featuredProducts = productService.getFeaturedProducts(6);
             model.addAttribute("products", featuredProducts);
             
-            // Add other homepage data
             model.addAttribute("totalProducts", productService.getTotalProducts());
             model.addAttribute("categories", productService.getAllCategoryNames());
             
         } catch (Exception e) {
-            // Fallback to empty list if service fails
+            
             model.addAttribute("products", List.of());
             model.addAttribute("totalProducts", 0L);
             model.addAttribute("categories", List.of());

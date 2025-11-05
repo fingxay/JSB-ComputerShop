@@ -1,8 +1,6 @@
-/* =====================================================
-   ADMIN USER MANAGEMENT STYLES
-   ===================================================== */
 
-/* User Table Enhanced */
+
+
 .admin-table-container {
     background: #ffffff;
     border-radius: 16px;
@@ -55,7 +53,7 @@
     font-size: 1rem;
 }
 
-/* User Info Cell */
+
 .user-info-cell {
     display: flex;
     align-items: center;
@@ -104,7 +102,7 @@
     font-size: 0.6rem;
 }
 
-/* Email Cell */
+
 .email-cell {
     display: flex;
     align-items: center;
@@ -117,7 +115,7 @@
     font-size: 0.9rem;
 }
 
-/* Date Cell */
+
 .date-cell {
     display: flex;
     align-items: center;
@@ -129,7 +127,7 @@
     font-size: 0.9rem;
 }
 
-/* User ID Badge */
+
 .user-id-badge {
     background: linear-gradient(135deg, #e0f2fe, #b3e5fc);
     color: #0277bd;
@@ -141,7 +139,7 @@
     font-family: 'JetBrains Mono', monospace;
 }
 
-/* Enhanced Badge Styles */
+
 .admin-badge {
     padding: 0.375rem 0.875rem;
     border-radius: 8px;
@@ -166,7 +164,7 @@
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-/* Actions Enhanced */
+
 .admin-actions {
     display: flex;
     gap: 0.75rem;
@@ -212,7 +210,7 @@
     color: #059669;
 }
 
-/* Empty State */
+
 .empty-state-cell {
     text-align: center;
     padding: 4rem 2rem;
@@ -257,7 +255,7 @@
     line-height: 1.5;
 }
 
-/* Table Enhancements */
+
 .admin-table thead th {
     position: sticky;
     top: 0;
@@ -280,7 +278,7 @@
     border-bottom: 1px solid #f1f5f9;
 }
 
-/* Text Utilities */
+
 .text-muted {
     color: #6b7280;
 }
@@ -289,7 +287,7 @@
     color: #059669;
 }
 
-/* Responsive Design */
+
 @media (max-width: 1024px) {
     .user-table-header {
         flex-direction: column;
@@ -338,7 +336,7 @@
     }
 }
 
-/* User Status Indicators */
+
 .user-status.online {
     color: #059669;
 }
@@ -351,7 +349,7 @@
     color: #d97706;
 }
 
-/* Enhanced Hover Effects */
+
 .admin-table tbody tr:hover .user-avatar {
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);

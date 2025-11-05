@@ -25,76 +25,46 @@ public class OrderService {
     @Autowired
     private OrderDetailService orderDetailService;
     
-    /**
-     * Get all orders
-     */
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }
     
-    /**
-     * Get order by ID
-     */
     public Optional<Order> getOrderById(Integer orderId) {
         return orderRepository.findById(orderId);
     }
     
-    /**
-     * Get orders by user
-     */
     public List<Order> getOrdersByUser(User user) {
         return orderRepository.findByUser(user);
     }
     
-    /**
-     * Get orders by user ID
-     */
     public List<Order> getOrdersByUserId(Integer userId) {
         return orderRepository.findByUserUserId(userId);
     }
     
-    /**
-     * Get user's orders (most recent first)
-     */
     public List<Order> getUserOrdersRecent(Integer userId) {
         return orderRepository.findByUserUserIdOrderByOrderDateDesc(userId);
     }
     
-    /**
-     * Get orders by date range
-     */
     public List<Order> getOrdersByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
         return orderRepository.findByOrderDateBetween(startDate, endDate);
     }
     
-    /**
-     * Get today's orders
-     */
     public List<Order> getTodayOrders() {
         LocalDateTime startOfDay = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         LocalDateTime endOfDay = startOfDay.plusDays(1);
         return orderRepository.findTodayOrders(startOfDay, endOfDay);
     }
     
-    /**
-     * Get orders from last N days
-     */
     public List<Order> getOrdersFromLastDays(int days) {
         LocalDateTime startDate = LocalDateTime.now().minusDays(days);
         return orderRepository.findOrdersFromLastDays(startDate);
     }
     
-    /**
-     * Get recent orders (last 30 days)
-     */
     public List<Order> getRecentOrders() {
         LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
         return orderRepository.findRecentOrders(thirtyDaysAgo);
     }
     
-    /**
-     * Create new order
-     */
     public Order createOrder(Order order) {
         if (order.getOrderDate() == null) {
             order.setOrderDate(LocalDateTime.now());
@@ -102,9 +72,6 @@ public class OrderService {
         return orderRepository.save(order);
     }
     
-    /**
-     * Create order for user
-     */
     public Order createOrderForUser(Integer userId) {
         User user = userService.getUserById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
@@ -116,9 +83,6 @@ public class OrderService {
         return orderRepository.save(order);
     }
     
-    /**
-     * Update order
-     */
     public Order updateOrder(Integer orderId, Order orderDetails) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found with id: " + orderId));
@@ -133,9 +97,6 @@ public class OrderService {
         return orderRepository.save(order);
     }
     
-    /**
-     * Delete order
-     */
     public void deleteOrder(Integer orderId) {
         if (!orderRepository.existsById(orderId)) {
             throw new RuntimeException("Order not found with id: " + orderId);
@@ -143,30 +104,18 @@ public class OrderService {
         orderRepository.deleteById(orderId);
     }
     
-    /**
-     * Count orders by user
-     */
     public long countOrdersByUser(User user) {
         return orderRepository.countByUser(user);
     }
     
-    /**
-     * Count orders by user ID
-     */
     public long countOrdersByUserId(Integer userId) {
         return orderRepository.countByUserUserId(userId);
     }
     
-    /**
-     * Get orders with total amounts
-     */
     public List<Object[]> getOrdersWithTotalAmount() {
         return orderRepository.findOrdersWithTotalAmount();
     }
     
-    /**
-     * Calculate order total using OrderDetailService
-     */
     public Double calculateOrderTotal(Integer orderId) {
         List<OrderDetail> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
         return orderDetails.stream()
@@ -174,14 +123,10 @@ public class OrderService {
                 .sum();
     }
     
-    /**
-     * Get order statistics for user
-     */
     public OrderStatistics getOrderStatisticsForUser(Integer userId) {
         long totalOrders = countOrdersByUserId(userId);
         List<Order> recentOrders = getUserOrdersRecent(userId);
         
-        // Calculate total spent (simplified - in real app, calculate from order details)
         double totalSpent = 0.0;
         for (Order order : recentOrders) {
             totalSpent += calculateOrderTotal(order.getOrderId());
@@ -190,9 +135,6 @@ public class OrderService {
         return new OrderStatistics(totalOrders, totalSpent, recentOrders.size());
     }
     
-    /**
-     * Inner class for order statistics
-     */
     public static class OrderStatistics {
         private long totalOrders;
         private double totalSpent;
@@ -204,37 +146,24 @@ public class OrderService {
             this.recentOrdersCount = recentOrdersCount;
         }
         
-        // Getters
         public long getTotalOrders() { return totalOrders; }
         public double getTotalSpent() { return totalSpent; }
         public int getRecentOrdersCount() { return recentOrdersCount; }
     }
     
-    /**
-     * Get recent orders by user ID
-     */
     public List<Order> getRecentOrdersByUserId(Integer userId, int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return orderRepository.findRecentOrdersByUserId(userId, pageable);
     }
     
-    /**
-     * Get total spent by user ID
-     */
     public double getTotalSpentByUserId(Integer userId) {
         return orderRepository.getTotalSpentByUserId(userId);
     }
     
-    /**
-     * Get total number of orders
-     */
     public long getTotalOrders() {
         return orderRepository.count();
     }
     
-    /**
-     * Get total revenue from all orders
-     */
     public double getTotalRevenue() {
         try {
             List<Order> orders = orderRepository.findAll();
@@ -250,9 +179,6 @@ public class OrderService {
         }
     }
     
-    /**
-     * Get recent orders for admin dashboard
-     */
     public List<Order> getRecentOrders(int limit) {
         Pageable pageable = PageRequest.of(0, limit);
         return orderRepository.findRecentOrdersForAdmin(pageable);

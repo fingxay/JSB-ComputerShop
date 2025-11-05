@@ -10,7 +10,7 @@
     <link rel="stylesheet" th:href="@{/CSS/products.css}" />
 </head>
 <body>
-    <!-- Include header fragment -->
+    
     <div th:replace="header :: header"></div>
 
     <main class="main-content">
@@ -28,7 +28,7 @@
                 </p>
             </div>
 
-            <!-- Filters and Search -->
+            
             <div class="filters-section">
                 <form method="get" action="/products">
                     <input type="hidden" name="search" th:value="${searchQuery}" />
@@ -63,9 +63,9 @@
                 </form>
             </div>
 
-            <!-- Products Grid -->
+            
             <div class="products-grid">
-                <!-- Server-side products -->
+                
                 <div class="product-card" th:each="product : ${products}">
                     <div class="product-image">
                         <img th:src="${product.image != null ? product.image.imageUrl : '/Images/placeholder.svg'}" 
@@ -100,7 +100,7 @@
                     </div>
                 </div>
 
-                <!-- Empty state when no products found -->
+                
                 <div th:if="${products == null or #lists.isEmpty(products)}" class="empty-state">
                     <div class="empty-message">
                         <h3>Không tìm thấy sản phẩm</h3>
@@ -120,7 +120,7 @@
         </div>
     </main>
 
-    <!-- Include footer fragment -->
+    
     <div th:replace="footer :: footer"></div>
 
     <script th:src="@{/JavaScript/header.js}"></script>
