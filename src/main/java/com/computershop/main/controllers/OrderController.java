@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("/order")
 public class OrderController {
 
     @Autowired
@@ -98,76 +98,6 @@ public class OrderController {
         model.addAttribute("cartSize", cartItems.size());
         
         return "cart/view"; 
-    }
-
-    @PostMapping("/add")
-    @ResponseBody
-    public Map<String, Object> addToCart(@RequestParam("productId") Integer productId,
-                                        @RequestParam("quantity") Integer quantity,
-                                        HttpSession session) {
-        Map<String, Object> response = new HashMap<>();
-        
-        try {
-            
-            if (quantity <= 0) {
-                response.put("success", false);
-                response.put("message", "Số lượng phải lớn hơn 0");
-                return response;
-            }
-            
-            Optional<Product> productOpt = productService.getProductById(productId);
-            if (productOpt.isEmpty()) {
-                response.put("success", false);
-                response.put("message", "Không tìm thấy sản phẩm");
-                return response;
-            }
-            
-            Product product = productOpt.get();
-            
-            if (product.getStockQuantity() < quantity) {
-                response.put("success", false);
-                response.put("message", "Không đủ hàng trong kho. Còn lại: " + product.getStockQuantity());
-                return response;
-            }
-            
-            List<CartItem> cart = getCartFromSession(session);
-            
-            boolean found = false;
-            for (CartItem item : cart) {
-                if (item.getProductId().equals(productId)) {
-                    int newQuantity = item.getQuantity() + quantity;
-                    if (newQuantity > product.getStockQuantity()) {
-                        response.put("success", false);
-                        response.put("message", "Không đủ hàng trong kho. Còn lại: " + product.getStockQuantity());
-                        return response;
-                    }
-                    item.setQuantity(newQuantity);
-                    found = true;
-                    break;
-                }
-            }
-            
-            if (!found) {
-                String imageUrl = product.getImage() != null ? product.getImage().getImageUrl() : "/Images/placeholder.jpg";
-                CartItem newItem = new CartItem(productId, product.getProductName(), 
-                                              product.getPrice(), quantity, imageUrl);
-                cart.add(newItem);
-            }
-            
-            saveCartToSession(session, cart);
-            
-            int cartSize = cart.stream().mapToInt(CartItem::getQuantity).sum();
-            
-            response.put("success", true);
-            response.put("message", "Đã thêm sản phẩm vào giỏ hàng");
-            response.put("cartSize", cartSize);
-            
-        } catch (Exception e) {
-            response.put("success", false);
-            response.put("message", "Đã xảy ra lỗi: " + e.getMessage());
-        }
-        
-        return response;
     }
 
     @PostMapping("/update")

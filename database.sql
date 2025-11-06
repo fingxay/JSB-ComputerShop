@@ -73,6 +73,29 @@ CREATE TABLE dbo.products (
 );
 GO
 
+IF OBJECT_ID(N'dbo.carts', N'U') IS NOT NULL DROP TABLE dbo.carts;
+CREATE TABLE dbo.carts (
+    cart_id INT IDENTITY(1,1) PRIMARY KEY,
+    user_id INT NOT NULL UNIQUE,
+    created_at DATETIME NOT NULL DEFAULT GETDATE(),
+    updated_at DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT FK_carts_users FOREIGN KEY (user_id) REFERENCES dbo.users(user_id)
+);
+GO
+
+IF OBJECT_ID(N'dbo.cart_items', N'U') IS NOT NULL DROP TABLE dbo.cart_items;
+CREATE TABLE dbo.cart_items (
+    cart_item_id INT IDENTITY(1,1) PRIMARY KEY,
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL DEFAULT 1,
+    added_at DATETIME NOT NULL DEFAULT GETDATE(),
+    CONSTRAINT FK_cart_items_carts FOREIGN KEY (cart_id) REFERENCES dbo.carts(cart_id) ON DELETE CASCADE,
+    CONSTRAINT FK_cart_items_products FOREIGN KEY (product_id) REFERENCES dbo.products(product_id),
+    CONSTRAINT UQ_cart_product UNIQUE(cart_id, product_id)
+);
+GO
+
 IF OBJECT_ID(N'dbo.orders', N'U') IS NOT NULL DROP TABLE dbo.orders;
 CREATE TABLE dbo.orders (
     order_id INT IDENTITY(1,1) PRIMARY KEY,

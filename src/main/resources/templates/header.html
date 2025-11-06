@@ -22,10 +22,6 @@
                     <a href="/" class="nav-link">Trang chủ</a>
                     <a href="/products" class="nav-link">Sản phẩm</a>
                     <a href="/about" class="nav-link">Giới thiệu</a>
-                    <a href="/cart" class="nav-link cart-link">
-                        <span>Giỏ hàng</span>
-                        <span class="cart-count" th:if="${session.cartCount != null}" th:text="${session.cartCount}">0</span>
-                    </a>
                     <a href="/login" class="nav-link btn btn-primary">Đăng nhập</a>
                     <a href="/register" class="nav-link">Đăng ký</a>
                 </div>
@@ -35,7 +31,7 @@
                     <a href="/" class="nav-link">Trang chủ</a>
                     <a href="/products" class="nav-link">Sản phẩm</a>
                     <a href="/about" class="nav-link">Giới thiệu</a>
-                    <a href="/cart" class="nav-link cart-link">
+                    <a href="/cart/view" class="nav-link cart-link">
                         <span>Giỏ hàng</span>
                         <span class="cart-count" th:if="${session.cartCount != null}" th:text="${session.cartCount}">0</span>
                     </a>
