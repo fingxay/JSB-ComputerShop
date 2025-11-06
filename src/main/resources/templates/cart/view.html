@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div th:replace="header :: header"></div>
+<div th:replace="~{header :: header}"></div>
 
 <div class="container cart-page">
     <h1>Giỏ hàng của bạn</h1>
@@ -70,7 +70,7 @@
 </div>
 
 
-<div th:replace="footer :: footer"></div>
+<div th:replace="~{footer :: footer}"></div>
 
 <script th:src="@{/JavaScript/header.js}"></script>
 <script th:src="@{/JavaScript/main.js}"></script>

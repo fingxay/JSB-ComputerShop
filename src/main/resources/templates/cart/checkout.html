@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div th:replace="header :: header"></div>
+<div th:replace="~{header :: header}"></div>
 
 <div class="container checkout-page">
     <h1>Thanh toán</h1>
@@ -59,7 +59,7 @@
 </div>
 
 
-<div th:replace="footer :: footer"></div>
+<div th:replace="~{footer :: footer}"></div>
 
 <script th:src="@{/JavaScript/header.js}"></script>
 </body>

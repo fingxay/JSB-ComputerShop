@@ -74,12 +74,24 @@ public class AdminController {
         
         try {
             List<User> users = userService.getAllUsers();
+            
+            long adminCount = users.stream()
+                .filter(u -> u.getRole() != null && "admin".equalsIgnoreCase(u.getRole().getRoleName()))
+                .count();
+            long customerCount = users.stream()
+                .filter(u -> u.getRole() != null && "customer".equalsIgnoreCase(u.getRole().getRoleName()))
+                .count();
+            
             model.addAttribute("users", users);
+            model.addAttribute("adminCount", adminCount);
+            model.addAttribute("customerCount", customerCount);
             return "admin/users"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
             model.addAttribute("users", List.of());
+            model.addAttribute("adminCount", 0);
+            model.addAttribute("customerCount", 0);
             return "admin/users";
         }
     }
@@ -190,9 +202,16 @@ public class AdminController {
             List<Product> products = productService.getAllProducts();
             List<Category> categories = categoryService.getAllCategoriesOrderedByName();
             
+            long inStockCount = products.stream().filter(p -> p.getStockQuantity() > 0).count();
+            long lowStockCount = products.stream().filter(p -> p.getStockQuantity() > 0 && p.getStockQuantity() <= 5).count();
+            long outOfStockCount = products.stream().filter(p -> p.getStockQuantity() == 0).count();
+            
             model.addAttribute("products", products);
             model.addAttribute("categories", categories);
             model.addAttribute("newProduct", new Product());
+            model.addAttribute("inStockCount", inStockCount);
+            model.addAttribute("lowStockCount", lowStockCount);
+            model.addAttribute("outOfStockCount", outOfStockCount);
             
             return "admin/products";
             
@@ -200,6 +219,9 @@ public class AdminController {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
             model.addAttribute("products", List.of());
             model.addAttribute("categories", List.of());
+            model.addAttribute("inStockCount", 0);
+            model.addAttribute("lowStockCount", 0);
+            model.addAttribute("outOfStockCount", 0);
             return "admin/products";
         }
     }
@@ -342,12 +364,29 @@ public class AdminController {
         
         try {
             List<Order> orders = orderService.getAllOrders();
+            
+            long pendingCount = orders.stream()
+                .filter(o -> o.getStatus() == null || "pending".equalsIgnoreCase(o.getStatus()))
+                .count();
+            long shippingCount = orders.stream()
+                .filter(o -> "shipping".equalsIgnoreCase(o.getStatus()))
+                .count();
+            long completedCount = orders.stream()
+                .filter(o -> "completed".equalsIgnoreCase(o.getStatus()))
+                .count();
+            
             model.addAttribute("orders", orders);
+            model.addAttribute("pendingCount", pendingCount);
+            model.addAttribute("shippingCount", shippingCount);
+            model.addAttribute("completedCount", completedCount);
             return "admin/orders"; 
             
         } catch (Exception e) {
             model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
             model.addAttribute("orders", List.of());
+            model.addAttribute("pendingCount", 0);
+            model.addAttribute("shippingCount", 0);
+            model.addAttribute("completedCount", 0);
             return "admin/orders";
         }
     }

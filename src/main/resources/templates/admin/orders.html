@@ -158,7 +158,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="admin-stat-content">
-                        <h3 th:text="${#lists.size(#lists.select(orders, o -> o.status == 'pending' || o.status == null))}">0</h3>
+                        <h3 th:text="${pendingCount}">0</h3>
                         <p>Đang Xử Lý</p>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
                         <i class="fas fa-truck"></i>
                     </div>
                     <div class="admin-stat-content">
-                        <h3 th:text="${#lists.size(#lists.select(orders, o -> o.status == 'shipping'))}">0</h3>
+                        <h3 th:text="${shippingCount}">0</h3>
                         <p>Đang Giao</p>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="admin-stat-content">
-                        <h3 th:text="${#lists.size(#lists.select(orders, o -> o.status == 'completed'))}">0</h3>
+                        <h3 th:text="${completedCount}">0</h3>
                         <p>Hoàn Thành</p>
                     </div>
                 </div>

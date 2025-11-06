@@ -173,7 +173,7 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="admin-stat-content">
-                        <h3 th:text="${#lists.size(#lists.select(products, p -> p.stockQuantity > 0))}">0</h3>
+                        <h3 th:text="${inStockCount}">0</h3>
                         <p>Còn Hàng</p>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
                     <div class="admin-stat-content">
-                        <h3 th:text="${#lists.size(#lists.select(products, p -> p.stockQuantity <= 5))}">0</h3>
+                        <h3 th:text="${lowStockCount}">0</h3>
                         <p>Sắp Hết Hàng</p>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                         <i class="fas fa-times-circle"></i>
                     </div>
                     <div class="admin-stat-content">
-                        <h3 th:text="${#lists.size(#lists.select(products, p -> p.stockQuantity == 0))}">0</h3>
+                        <h3 th:text="${outOfStockCount}">0</h3>
                         <p>Hết Hàng</p>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
 </head>
 <body>
     
-    <div th:replace="header :: header"></div>
+    <div th:replace="~{header :: header}"></div>
 
     <main class="main-content">
         <div class="container">
@@ -92,7 +92,7 @@
     </main>
 
     
-    <div th:replace="footer :: footer"></div>
+    <div th:replace="~{footer :: footer}"></div>
 
     <script th:src="@{/JavaScript/header.js}"></script>
     <script th:src="@{/JavaScript/main.js}"></script>
