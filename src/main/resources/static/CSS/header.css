@@ -53,11 +53,6 @@
     padding: 10px 20px;
 }
 
-.btn-primary {
-    background: var(--brand);
-    color: white;
-}
-
 .nav {
     display: flex;
     align-items: center;
@@ -70,11 +65,10 @@
 }
 
 .nav-link {
-    color: white;
+    color: #6c757d;
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 6px;
-    background: var(--brand-light);
     transition: all 0.2s;
 }
 
