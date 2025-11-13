@@ -6,7 +6,7 @@
     border-radius: 16px;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
     margin: 2rem;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid #e2e8f0;
 }
 
@@ -103,7 +103,7 @@
     border: 1px solid #e2e8f0;
     border-radius: 12px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    z-index: 1000;
+    z-index: 10000;
     min-width: 200px;
     padding: 0.5rem 0;
     margin-top: 0.5rem;
@@ -353,3 +353,4 @@
         right: auto;
     }
 }
+
