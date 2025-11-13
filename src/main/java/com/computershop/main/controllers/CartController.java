@@ -72,7 +72,7 @@ public class CartController {
         try {
             Optional<Cart> cartOpt = cartService.getCartByUserId(userId);
             Cart cart;
-            
+
             if (cartOpt.isEmpty()) {
                 Optional<User> userOpt = userService.getUserById(userId);
                 if (userOpt.isEmpty()) {

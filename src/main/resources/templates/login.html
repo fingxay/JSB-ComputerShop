@@ -16,18 +16,19 @@
 
 	<main class="container">
 		<div class="auth-wrapper">
-			<div class="auth-header">
-				<img src="/Images/placeholder.svg" alt="logo" />
-				<div>
-					<h2>Đăng nhập vào tài khoản</h2>
-					<div class="muted">Đăng nhập để tiếp tục mua sắm và quản lý đơn hàng</div>
-				</div>
+		<div class="auth-header">
+			<img src="/Images/placeholder.svg" alt="logo" />
+			<div>
+				<h2>Đăng nhập vào tài khoản</h2>
+				<div class="muted">Đăng nhập để tiếp tục mua sắm và quản lý đơn hàng</div>
 			</div>
+		</div>
 
-			<div th:if="${param.error}" class="error">Tên đăng nhập hoặc mật khẩu không đúng.</div>
-			<div th:if="${param.logout}" class="muted">Bạn đã đăng xuất thành công.</div>
-
-			<form th:action="@{/login}" method="post">
+		<div th:if="${error}" class="error" th:text="${error}">Lỗi đăng nhập</div>
+		<div th:if="${param.error}" class="error">Tên đăng nhập hoặc mật khẩu không đúng.</div>
+		<div th:if="${message}" class="success" th:text="${message}">Thông báo</div>
+		<div th:if="${success}" class="success" th:text="${success}">Thành công</div>
+		<div th:if="${param.logout}" class="success">Bạn đã đăng xuất thành công.</div>			<form th:action="@{/login}" method="post">
 
 				<div class="form-row">
 					<label for="username" class="muted">Email hoặc tên đăng nhập</label>
