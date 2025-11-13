@@ -68,7 +68,7 @@ public class UserService {
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
-        user.setPasswordHash(password); 
+        user.setPasswordHash(hashPassword(password)); 
         user.setRole(roleService.getCustomerRole());
         
         return createUser(user);
@@ -101,7 +101,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
         
-        user.setPasswordHash(newPassword); 
+        user.setPasswordHash(hashPassword(newPassword)); 
         
         userRepository.save(user);
     }
