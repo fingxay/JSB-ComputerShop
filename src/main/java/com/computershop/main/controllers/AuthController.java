@@ -2,8 +2,10 @@ package com.computershop.main.controllers;
 
 import com.computershop.main.entities.User;
 import com.computershop.main.entities.Role;
+import com.computershop.main.entities.PasswordResetToken;
 import com.computershop.main.services.UserService;
 import com.computershop.main.services.RoleService;
+import com.computershop.main.services.PasswordResetTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class AuthController {
     
     @Autowired
     private RoleService roleService;
+    
+    @Autowired
+    private PasswordResetTokenService passwordResetTokenService;
 
     @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
@@ -162,5 +167,95 @@ public class AuthController {
     @GetMapping("/forgot-password")
     public String forgotPasswordPage() {
         return "forgot-password"; 
+    }
+    
+    @PostMapping("/forgot-password")
+    public String processForgotPassword(@RequestParam("email") String email,
+                                       Model model,
+                                       RedirectAttributes redirectAttributes) {
+        try {
+            Optional<User> userOpt = userService.findByEmail(email);
+            
+            if (userOpt.isEmpty()) {
+                model.addAttribute("error", "Không tìm thấy tài khoản với email này.");
+                return "forgot-password";
+            }
+            
+            User user = userOpt.get();
+            PasswordResetToken resetToken = passwordResetTokenService.createToken(user);
+            
+            // Trong thực tế, bạn nên gửi email với link reset
+            // Tạm thời hiển thị link trực tiếp
+            String resetLink = "/reset-password?token=" + resetToken.getToken();
+            
+            model.addAttribute("success", 
+                "Đã tạo link đặt lại mật khẩu. Vui lòng truy cập: " + resetLink);
+            model.addAttribute("resetLink", resetLink);
+            
+            return "forgot-password";
+            
+        } catch (Exception e) {
+            model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
+            return "forgot-password";
+        }
+    }
+    
+    @GetMapping("/reset-password")
+    public String resetPasswordPage(@RequestParam("token") String token, Model model) {
+        
+        if (!passwordResetTokenService.validateToken(token)) {
+            model.addAttribute("error", "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.");
+            return "forgot-password";
+        }
+        
+        model.addAttribute("token", token);
+        return "reset-password";
+    }
+    
+    @PostMapping("/reset-password")
+    public String processResetPassword(@RequestParam("token") String token,
+                                      @RequestParam("newPassword") String newPassword,
+                                      @RequestParam("confirmPassword") String confirmPassword,
+                                      Model model,
+                                      RedirectAttributes redirectAttributes) {
+        
+        try {
+            if (!passwordResetTokenService.validateToken(token)) {
+                model.addAttribute("error", "Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.");
+                return "reset-password";
+            }
+            
+            if (newPassword == null || newPassword.length() < 6) {
+                model.addAttribute("error", "Mật khẩu phải có ít nhất 6 ký tự.");
+                model.addAttribute("token", token);
+                return "reset-password";
+            }
+            
+            if (!newPassword.equals(confirmPassword)) {
+                model.addAttribute("error", "Mật khẩu xác nhận không khớp.");
+                model.addAttribute("token", token);
+                return "reset-password";
+            }
+            
+            Optional<PasswordResetToken> tokenOpt = passwordResetTokenService.getToken(token);
+            if (tokenOpt.isEmpty()) {
+                model.addAttribute("error", "Token không hợp lệ.");
+                return "reset-password";
+            }
+            
+            User user = tokenOpt.get().getUser();
+            userService.changePassword(user.getUserId(), newPassword);
+            
+            passwordResetTokenService.markTokenAsUsed(token);
+            
+            redirectAttributes.addFlashAttribute("success", 
+                "Đặt lại mật khẩu thành công! Bạn có thể đăng nhập ngay bây giờ.");
+            return "redirect:/login";
+            
+        } catch (Exception e) {
+            model.addAttribute("error", "Đã xảy ra lỗi: " + e.getMessage());
+            model.addAttribute("token", token);
+            return "reset-password";
+        }
     }
 }

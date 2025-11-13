@@ -186,6 +186,19 @@ INSERT INTO dbo.order_details (order_id, product_id, quantity, price) VALUES
 
 GO
 
+-- Password reset tokens table
+IF OBJECT_ID(N'dbo.password_reset_tokens', N'U') IS NOT NULL DROP TABLE dbo.password_reset_tokens;
+CREATE TABLE dbo.password_reset_tokens (
+    token_id INT IDENTITY(1,1) PRIMARY KEY,
+    token VARCHAR(100) NOT NULL UNIQUE,
+    user_id INT NOT NULL,
+    expiry_date DATETIME NOT NULL,
+    used BIT NOT NULL DEFAULT 0,
+    created_at DATETIME NOT NULL DEFAULT GETDATE(),
+    
+    CONSTRAINT FK_password_reset_tokens_users FOREIGN KEY (user_id) REFERENCES dbo.users(user_id) ON DELETE CASCADE
+);
+GO
 
 -- Insert sample data for testing products page
 
